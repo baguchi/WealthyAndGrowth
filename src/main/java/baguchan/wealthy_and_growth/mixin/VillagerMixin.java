@@ -1,8 +1,8 @@
 package baguchan.wealthy_and_growth.mixin;
 
-import baguchan.wealthy_and_growth.WAGConfig;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
@@ -68,8 +68,15 @@ public abstract class VillagerMixin extends AbstractVillager {
 		Item item = p_35543_.getItem();
 		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
 	}
+
 	@Shadow
 	public VillagerData getVillagerData() {
 		return null;
+	}
+
+	@Override
+	protected void dropCustomDeathLoot(DamageSource p_21385_, int p_21386_, boolean p_21387_) {
+		super.dropCustomDeathLoot(p_21385_, p_21386_, p_21387_);
+		this.getInventory().removeAllItems().forEach(this::spawnAtLocation);
 	}
 }

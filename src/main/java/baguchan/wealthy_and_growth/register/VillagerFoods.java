@@ -1,9 +1,12 @@
 package baguchan.wealthy_and_growth.register;
 
+import baguchan.wealthy_and_growth.WAGConfig;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,5 +27,29 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.PUMPKIN);
 		WANTED_ITEMS.add(Items.PUMPKIN_PIE);
 		WANTED_ITEMS.add(Items.MELON_SLICE);
+
+		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+			if (item != null) {
+				WANTED_ITEMS.add(item);
+			}
+		}
+
+		for (String name : WAGConfig.COMMON.cropWhitelist.get()) {
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+			if (item != null) {
+				FOOD_POINTS.put(item, 2);
+				WANTED_ITEMS.add(item);
+			}
+		}
+
+		for (String name : WAGConfig.COMMON.foodWhitelist.get()) {
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+			if (item != null) {
+				FOOD_POINTS.put(item, 4);
+				WANTED_ITEMS.add(item);
+			}
+		}
+
 	}
 }
