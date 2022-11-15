@@ -35,15 +35,15 @@ public class WAGConfig {
 							, Lists.newArrayList("farmersdelight:cabbage_seeds")
 							, validator);
 			cropWhitelist = builder
-					.comment("Add Item for What Villager can eatable about crop(Using with bread or heal) [example: minecraft:carrot]")
+					.comment("Add Item for What Villager can eatable about crop(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:carrot]")
 					.defineList("Villager's Crop Whitelist"
 							, Lists.newArrayList("neapolitan:strawberries", "neapolitan:banana", "farmersdelight:cabbage", "farmersdelight:onion")
 							, validator);
 			foodWhitelist = builder
-					.comment("Add Item for What Villager can eatable about food(Using with bread or heal) [example: minecraft:apple]")
+					.comment("Add Item for What Villager can eatable about food(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:apple]")
 					.defineList("Villager's Food Whitelist"
-							, Lists.newArrayList("neapolitan:chocolate_bar", "neapolitan:strawberry_scones", "neapolitan:banana_bread", "neapolitan:dried_banana", "neapolitan:chocolate_strawberries"
-									, "farmersdelight:cake_slice", "farmersdelight:apple_pie_slice", "farmersdelight:chocolate_pie_slice", "farmersdelight:sweet_berry_cookie", "farmersdelight:honey_cookie", "farmersdelight:egg_sandwich", "farmersdelight:chicken_sandwich")
+							, Lists.newArrayList("neapolitan:strawberry_scones", "neapolitan:banana_bread", "neapolitan:dried_banana", "neapolitan:chocolate_strawberries"
+									, "farmersdelight:cake_slice", "farmersdelight:apple_pie_slice", "farmersdelight:chocolate_pie_slice", "farmersdelight:sweet_berry_cookie", "farmersdelight:honey_cookie")
 							, validator);
 		}
 	}

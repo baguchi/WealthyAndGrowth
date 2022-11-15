@@ -79,4 +79,13 @@ public abstract class VillagerMixin extends AbstractVillager {
 		super.dropCustomDeathLoot(p_21385_, p_21386_, p_21387_);
 		this.getInventory().removeAllItems().forEach(this::spawnAtLocation);
 	}
+
+	@Override
+	public ItemStack eat(Level p_21067_, ItemStack p_21068_) {
+		if (p_21068_.isEdible()) {
+			heal(p_21068_.getFoodProperties(this).getNutrition());
+		}
+
+		return super.eat(p_21067_, p_21068_);
+	}
 }

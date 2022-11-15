@@ -42,7 +42,7 @@ authors="bagu_chan" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Add User Friendly Modern Feature
+Add Villager mechanic more unique!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.wealthy_and_growth]] #optional
