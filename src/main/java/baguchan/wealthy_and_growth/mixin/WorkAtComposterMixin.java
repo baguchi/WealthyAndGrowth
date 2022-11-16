@@ -1,6 +1,5 @@
 package baguchan.wealthy_and_growth.mixin;
 
-import baguchan.wealthy_and_growth.WAGConfig;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
@@ -50,7 +49,7 @@ public class WorkAtComposterMixin {
 
 	private void makeFood(Villager p_24803_) {
 		SimpleContainer simplecontainer = p_24803_.getInventory();
-		if (simplecontainer.countItem(Items.PUMPKIN) <= 4) {
+		if (simplecontainer.countItem(Items.PUMPKIN_PIE) <= 36) {
 			int i = simplecontainer.countItem(Items.PUMPKIN);
 			if (i != 0) {
 				int i1 = i * 2;

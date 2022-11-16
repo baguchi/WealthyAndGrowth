@@ -127,7 +127,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-
+    maven { url "https://www.cursemaven.com" }
 }
 
 dependencies {
@@ -141,7 +141,7 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-
+    implementation fg.deobf("curse.maven:farmers_delight-398521:${project.farmersDelight}")
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
