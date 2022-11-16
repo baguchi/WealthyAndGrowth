@@ -31,7 +31,7 @@ public class WAGConfig {
 					.define("Revamped Patrol", true);
 			seedWhitelist = builder
 					.comment("Add Item for What Villager can plant seed [example: minecraft:carrot]")
-					.defineList("Villager's Crop Whitelist"
+					.defineList("Villager's Seed Whitelist"
 							, Lists.newArrayList("farmersdelight:cabbage_seeds", "farmersdelight:tomato_seeds")
 							, validator);
 			cropWhitelist = builder
