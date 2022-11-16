@@ -32,12 +32,12 @@ public class WAGConfig {
 			seedWhitelist = builder
 					.comment("Add Item for What Villager can plant seed [example: minecraft:carrot]")
 					.defineList("Villager's Crop Whitelist"
-							, Lists.newArrayList("farmersdelight:cabbage_seeds")
+							, Lists.newArrayList("farmersdelight:cabbage_seeds", "farmersdelight:tomato_seeds")
 							, validator);
 			cropWhitelist = builder
 					.comment("Add Item for What Villager can eatable about crop(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:carrot]")
 					.defineList("Villager's Crop Whitelist"
-							, Lists.newArrayList("neapolitan:strawberries", "neapolitan:banana", "farmersdelight:cabbage", "farmersdelight:onion")
+							, Lists.newArrayList("neapolitan:strawberries", "neapolitan:banana", "farmersdelight:cabbage", "farmersdelight:onion", "farmersdelight:tomato")
 							, validator);
 			foodWhitelist = builder
 					.comment("Add Item for What Villager can eatable about food(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:apple]")
