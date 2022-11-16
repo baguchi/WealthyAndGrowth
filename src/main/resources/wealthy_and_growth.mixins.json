@@ -9,6 +9,7 @@
     "AbstractIllagerMixin",
     "VillagerMixin",
     "WorkAtComposterMixin",
+    "HarvestFarmlandMixin",
     "VillagerGoalPackagesMixin"
   ],
   "injectors": {

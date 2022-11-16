@@ -1,6 +1,7 @@
 package baguchan.wealthy_and_growth.mixin;
 
 import baguchan.wealthy_and_growth.register.VillagerFoods;
+import baguchan.wealthy_and_growth.utils.ContainerUtils;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -71,6 +72,11 @@ public abstract class VillagerMixin extends AbstractVillager {
 	@Shadow
 	public VillagerData getVillagerData() {
 		return null;
+	}
+
+	@Inject(at = @At("HEAD"), method = "hasFarmSeeds", cancellable = true)
+	public void hasFarmSeeds(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+		callbackInfoReturnable.setReturnValue(ContainerUtils.hasAnyOf(this.getInventory(), VillagerFoods.PLANTS_ITEMS));
 	}
 
 	@Override

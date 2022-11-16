@@ -21,6 +21,7 @@ public class WAGConfig {
 
 		public final ForgeConfigSpec.BooleanValue revampedPatrol;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> seedWhitelist;
+		public final ForgeConfigSpec.ConfigValue<List<? extends String>> plantableCropWhitelist;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> cropWhitelist;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> foodWhitelist;
 
@@ -30,9 +31,14 @@ public class WAGConfig {
 					.comment("Enable Pillager Patrol Revamped Mechanic.")
 					.define("Revamped Patrol", true);
 			seedWhitelist = builder
-					.comment("Add Item for What Villager can plant seed [example: minecraft:carrot]")
+					.comment("Add Item for What Villager can plant seed and compostable [example: farmersdelight:cabbage_seeds]")
 					.defineList("Villager's Seed Whitelist"
-							, Lists.newArrayList("farmersdelight:cabbage_seeds", "farmersdelight:tomato_seeds")
+							, Lists.newArrayList("farmersdelight:cabbage_seeds")
+							, validator);
+			plantableCropWhitelist = builder
+					.comment("Add Item for What Villager can plant crop [example: minecraft:carrot]")
+					.defineList("Villager's Plantable Crop Whitelist"
+							, Lists.newArrayList("farmersdelight:onion")
 							, validator);
 			cropWhitelist = builder
 					.comment("Add Item for What Villager can eatable about crop(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:carrot]")
