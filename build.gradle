@@ -19,7 +19,7 @@ mixin {
     add sourceSets.main, "wealthy_and_growth.refmap.json"
 }
 
-version = '1.18.2-0.2.0'
+version = '1.18.2-0.2.1'
 group = 'baguchan.wealthy_and_growth' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Wealthy And Growth'
 
