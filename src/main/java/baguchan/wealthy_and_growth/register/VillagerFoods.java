@@ -122,6 +122,11 @@ public class VillagerFoods {
 		COMPOSTABLE_ITEMS.add(Items.BEETROOT_SEEDS);
 		COMPOSTABLE_ITEMS.add(Items.WHEAT_SEEDS);
 
+		PLANTS_ITEMS.add(Items.BEETROOT_SEEDS);
+		PLANTS_ITEMS.add(Items.WHEAT_SEEDS);
+		PLANTS_ITEMS.add(Items.POTATO);
+		PLANTS_ITEMS.add(Items.CARROT);
+
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
 			if (item != null) {
