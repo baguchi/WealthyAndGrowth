@@ -25,8 +25,8 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onUpdate(LivingEvent.LivingTickEvent event) {
-		LivingEntity livingEntity = event.getEntity();
+	public static void onUpdate(LivingEvent.LivingUpdateEvent event) {
+		LivingEntity livingEntity = event.getEntityLiving();
 		livingEntity.getCapability(WealthyAndGrowth.PLAYER_TARGET_CAPABILITY).ifPresent(tofuLivingCapability -> {
 			tofuLivingCapability.tick(livingEntity);
 		});

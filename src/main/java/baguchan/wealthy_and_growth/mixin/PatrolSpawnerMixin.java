@@ -5,7 +5,6 @@ import baguchan.wealthy_and_growth.utils.TargetUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.biome.Biome;
@@ -17,6 +16,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Random;
 
 @Mixin(PatrolSpawner.class)
 public class PatrolSpawnerMixin {
@@ -32,7 +33,7 @@ public class PatrolSpawnerMixin {
 		} else if (!level.getGameRules().getBoolean(GameRules.RULE_DO_PATROL_SPAWNING)) {
 			callbackinfo.setReturnValue(0);
 		} else {
-			RandomSource random = level.random;
+			Random random = level.random;
 			--this.nextTick;
 			if (this.nextTick > 0) {
 				callbackinfo.setReturnValue(0);
@@ -98,7 +99,7 @@ public class PatrolSpawnerMixin {
 	}
 
 	@Shadow
-	private boolean spawnPatrolMember(ServerLevel p_64565_, BlockPos p_64566_, RandomSource p_64567_, boolean p_64568_) {
+	private boolean spawnPatrolMember(ServerLevel p_64565_, BlockPos p_64566_, Random p_64567_, boolean p_64568_) {
 		return false;
 	}
 }

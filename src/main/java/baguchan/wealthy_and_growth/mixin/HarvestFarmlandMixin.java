@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,7 +42,7 @@ public class HarvestFarmlandMixin extends Behavior<Villager> {
 	private int timeWorkedSoFar;
 	@Shadow
 	@Final
-	private final List<BlockPos> validFarmlandAroundVillager = Lists.newArrayList();
+	private List<BlockPos> validFarmlandAroundVillager = Lists.newArrayList();
 
 	public HarvestFarmlandMixin() {
 		super(ImmutableMap.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.VALUE_ABSENT, MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT, MemoryModuleType.SECONDARY_JOB_SITE, MemoryStatus.VALUE_PRESENT));
@@ -70,27 +69,22 @@ public class HarvestFarmlandMixin extends Behavior<Villager> {
 							if (itemstack.is(Items.WHEAT_SEEDS)) {
 								BlockState blockstate1 = Blocks.WHEAT.defaultBlockState();
 								p_23196_.setBlockAndUpdate(this.aboveFarmlandPos, blockstate1);
-								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate1));
 								flag = true;
 							} else if (itemstack.is(Items.POTATO)) {
 								BlockState blockstate2 = Blocks.POTATOES.defaultBlockState();
 								p_23196_.setBlockAndUpdate(this.aboveFarmlandPos, blockstate2);
-								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate2));
 								flag = true;
 							} else if (itemstack.is(Items.CARROT)) {
 								BlockState blockstate3 = Blocks.CARROTS.defaultBlockState();
 								p_23196_.setBlockAndUpdate(this.aboveFarmlandPos, blockstate3);
-								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate3));
 								flag = true;
 							} else if (itemstack.is(Items.BEETROOT_SEEDS)) {
 								BlockState blockstate4 = Blocks.BEETROOTS.defaultBlockState();
 								p_23196_.setBlockAndUpdate(this.aboveFarmlandPos, blockstate4);
-								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate4));
 								flag = true;
 							} else if (itemstack.getItem() instanceof ItemNameBlockItem) {
 								BlockState blockstate5 = ((ItemNameBlockItem) itemstack.getItem()).getBlock().defaultBlockState();
 								p_23196_.setBlockAndUpdate(aboveFarmlandPos, blockstate5);
-								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate5));
 
 								flag = true;
 							}

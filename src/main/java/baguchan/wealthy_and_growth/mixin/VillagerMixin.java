@@ -66,7 +66,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 	@Inject(at = @At("HEAD"), method = "wantsToPickUp", cancellable = true)
 	public void wantsToPickUp(ItemStack p_35543_, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
 		Item item = p_35543_.getItem();
-		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
+		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || this.getVillagerData().getProfession().getRequestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
 	}
 
 	@Shadow
