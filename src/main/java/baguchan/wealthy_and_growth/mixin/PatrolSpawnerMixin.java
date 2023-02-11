@@ -25,28 +25,27 @@ public class PatrolSpawnerMixin {
 
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
 	public void tick(ServerLevel level, boolean p_64571_, boolean p_64572_, CallbackInfoReturnable<Integer> callbackinfo) {
-		if(WAGConfig.COMMON.revampedPatrol.get()){
-
-		if (!p_64571_) {
-			callbackinfo.setReturnValue(0);
-		} else if (!level.getGameRules().getBoolean(GameRules.RULE_DO_PATROL_SPAWNING)) {
-			callbackinfo.setReturnValue(0);
-		} else {
-			RandomSource random = level.random;
-			--this.nextTick;
-			if (this.nextTick > 0) {
+		if (WAGConfig.COMMON.revampedPatrol.get()) {
+			if (!p_64571_) {
+				callbackinfo.setReturnValue(0);
+			} else if (!level.getGameRules().getBoolean(GameRules.RULE_DO_PATROL_SPAWNING)) {
 				callbackinfo.setReturnValue(0);
 			} else {
-				this.nextTick += 12000 + random.nextInt(1200);
-				long i = level.getDayTime() / 24000L;
-				if (i >= 5L && level.isDay()) {
+				RandomSource random = level.random;
+				--this.nextTick;
+				if (this.nextTick > 0) {
+					callbackinfo.setReturnValue(0);
+				} else {
+					this.nextTick += 12000 + random.nextInt(1200);
+					long i = level.getDayTime() / 24000L;
+					if (i >= 5L && level.isDay()) {
 						int j = level.players().size();
 						if (j < 1) {
 							callbackinfo.setReturnValue(0);
 						} else {
 							Player player = level.players().get(random.nextInt(j));
 
-							if(!TargetUtils.canTarget(player, random, 0.2F)){
+							if (!TargetUtils.canTarget(player, random, 0.2F)) {
 								callbackinfo.setReturnValue(0);
 							}
 							if (player.isSpectator()) {
@@ -66,9 +65,9 @@ public class PatrolSpawnerMixin {
 										callbackinfo.setReturnValue(0);
 									} else {
 										int j1 = 0;
-										int k1 = (int)Math.ceil((double)level.getCurrentDifficultyAt(blockpos$mutableblockpos).getEffectiveDifficulty()) + 1;
+										int k1 = (int) Math.ceil((double) level.getCurrentDifficultyAt(blockpos$mutableblockpos).getEffectiveDifficulty()) + 1;
 
-										for(int l1 = 0; l1 < k1; ++l1) {
+										for (int l1 = 0; l1 < k1; ++l1) {
 											++j1;
 											blockpos$mutableblockpos.setY(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, blockpos$mutableblockpos).getY());
 											if (l1 == 0) {
@@ -89,11 +88,11 @@ public class PatrolSpawnerMixin {
 							}
 						}
 
-				} else {
-					callbackinfo.setReturnValue(0);
+					} else {
+						callbackinfo.setReturnValue(0);
+					}
 				}
 			}
-		}
 		}
 	}
 

@@ -2,6 +2,7 @@ package baguchan.wealthy_and_growth.register;
 
 import baguchan.wealthy_and_growth.WAGConfig;
 import baguchan.wealthy_and_growth.WealthyAndGrowth;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +12,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.List;
 import java.util.Map;
