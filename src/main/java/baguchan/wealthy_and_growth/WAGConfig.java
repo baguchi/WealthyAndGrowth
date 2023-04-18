@@ -48,7 +48,7 @@ public class WAGConfig {
 			foodWhitelist = builder
 					.comment("Add Item for What Villager can eatable about food(you should set eatable food. when you set non eatable food. villager not eat forever!) [example: minecraft:apple]")
 					.defineList("Villager's Food Whitelist"
-							, Lists.newArrayList("neapolitan:strawberry_scones", "neapolitan:banana_bread", "neapolitan:dried_banana", "neapolitan:chocolate_strawberries"
+							, Lists.newArrayList("minecraft:cod", "minecraft:salmon", "neapolitan:strawberry_scones", "neapolitan:banana_bread", "neapolitan:dried_banana", "neapolitan:chocolate_strawberries"
 									, "farmersdelight:cake_slice", "farmersdelight:apple_pie_slice", "farmersdelight:chocolate_pie_slice", "farmersdelight:sweet_berry_cookie", "farmersdelight:honey_cookie")
 							, validator);
 		}

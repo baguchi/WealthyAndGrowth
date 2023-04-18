@@ -1,5 +1,7 @@
 package baguchan.wealthy_and_growth.mixin;
 
+import baguchan.wealthy_and_growth.api.IFishing;
+import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import baguchan.wealthy_and_growth.utils.ContainerUtils;
 import net.minecraft.world.SimpleContainer;
@@ -17,10 +19,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nullable;
+
 @Mixin(Villager.class)
-public abstract class VillagerMixin extends AbstractVillager {
+public abstract class VillagerMixin extends AbstractVillager implements IFishing {
 	@Shadow
 	private int foodLevel;
+	@Nullable
+	public VillagerFishingHook fishing;
 
 	public VillagerMixin(EntityType<? extends AbstractVillager> p_35267_, Level p_35268_) {
 		super(p_35267_, p_35268_);
@@ -28,32 +34,41 @@ public abstract class VillagerMixin extends AbstractVillager {
 
 	@Inject(at = @At("HEAD"), method = "eatUntilFull", cancellable = true)
 	private void eatUntilFull(CallbackInfo callbackInfo) {
-			if (this.hungry() && this.countFoodPointsInInventory() != 0) {
-				for (int i = 0; i < this.getInventory().getContainerSize(); ++i) {
-					ItemStack itemstack = this.getInventory().getItem(i);
-					if (!itemstack.isEmpty()) {
-						Integer integer = VillagerFoods.FOOD_POINTS.get(itemstack.getItem());
-						if (integer != null) {
-							int j = itemstack.getCount();
+		if (this.hungry() && this.countFoodPointsInInventory() != 0) {
+			for (int i = 0; i < this.getInventory().getContainerSize(); ++i) {
+				ItemStack itemstack = this.getInventory().getItem(i);
+				if (!itemstack.isEmpty()) {
+					Integer integer = VillagerFoods.FOOD_POINTS.get(itemstack.getItem());
+					if (integer != null) {
+						int j = itemstack.getCount();
 
-							for (int k = j; k > 0; --k) {
-								this.foodLevel = (byte) (this.foodLevel + integer);
-								this.getInventory().removeItem(i, 1);
-								if (!this.hungry()) {
-									return;
-								}
+						for (int k = j; k > 0; --k) {
+							this.foodLevel = (byte) (this.foodLevel + integer);
+							this.getInventory().removeItem(i, 1);
+							if (!this.hungry()) {
+								return;
 							}
 						}
 					}
 				}
-
 			}
-			callbackInfo.cancel();
+
+		}
+		callbackInfo.cancel();
 	}
 
 	@Shadow
 	private boolean hungry() {
 		return false;
+	}
+
+	@Nullable
+	public VillagerFishingHook getFishingHook() {
+		return fishing;
+	}
+
+	public void setFishingHook(@Nullable VillagerFishingHook fishing) {
+		this.fishing = fishing;
 	}
 
 	private int countFoodPointsInInventory() {

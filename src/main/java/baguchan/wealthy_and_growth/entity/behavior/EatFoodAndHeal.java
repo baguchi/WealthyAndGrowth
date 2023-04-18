@@ -50,4 +50,8 @@ public class EatFoodAndHeal extends Behavior<Villager> {
 	protected boolean canStillUse(ServerLevel p_23204_, Villager p_23205_, long p_23206_) {
 		return p_23205_.isUsingItem();
 	}
+
+	protected boolean timedOut(long p_24152_) {
+		return false;
+	}
 }
