@@ -36,6 +36,7 @@ public class VillagerFoods {
 		FOOD_POINTS.put(Items.BREAD, 4);
 		FOOD_POINTS.put(Items.POTATO, 1);
 		FOOD_POINTS.put(Items.CARROT, 1);
+		FOOD_POINTS.put(Items.APPLE, 1);
 		FOOD_POINTS.put(Items.BEETROOT, 1);
 		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
 		FOOD_POINTS.put(Items.MELON_SLICE, 2);
@@ -43,6 +44,7 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.BREAD);
 		WANTED_ITEMS.add(Items.POTATO);
 		WANTED_ITEMS.add(Items.CARROT);
+		WANTED_ITEMS.add(Items.APPLE);
 		WANTED_ITEMS.add(Items.BEETROOT);
 		WANTED_ITEMS.add(Items.BEETROOT_SEEDS);
 		WANTED_ITEMS.add(Items.WHEAT_SEEDS);
@@ -104,6 +106,7 @@ public class VillagerFoods {
 		FOOD_POINTS.put(Items.BREAD, 4);
 		FOOD_POINTS.put(Items.POTATO, 1);
 		FOOD_POINTS.put(Items.CARROT, 1);
+		FOOD_POINTS.put(Items.APPLE, 1);
 		FOOD_POINTS.put(Items.BEETROOT, 1);
 		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
 		FOOD_POINTS.put(Items.MELON_SLICE, 2);
@@ -111,6 +114,7 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.BREAD);
 		WANTED_ITEMS.add(Items.POTATO);
 		WANTED_ITEMS.add(Items.CARROT);
+		WANTED_ITEMS.add(Items.APPLE);
 		WANTED_ITEMS.add(Items.BEETROOT);
 		WANTED_ITEMS.add(Items.BEETROOT_SEEDS);
 		WANTED_ITEMS.add(Items.WHEAT_SEEDS);
