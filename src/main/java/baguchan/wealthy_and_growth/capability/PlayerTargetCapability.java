@@ -18,9 +18,9 @@ public class PlayerTargetCapability implements ICapabilityProvider, ICapabilityS
 	private float effectiveTargetScale;
 
 	public void tick(LivingEntity entity) {
-		if(entity.level.dayTime() % 1200L == 0) {
-			if (entity.level instanceof ServerLevel) {
-				if (((ServerLevel) entity.level).isCloseToVillage(entity.blockPosition(), 2)) {
+		if (entity.level().dayTime() % 1200L == 0) {
+			if (entity.level() instanceof ServerLevel) {
+				if (((ServerLevel) entity.level()).isCloseToVillage(entity.blockPosition(), 2)) {
 					setEffectiveTargetScale(getEffectiveTargetScale() + 0.01F);
 				} else {
 					setEffectiveTargetScale(getEffectiveTargetScale() - 0.04F);
