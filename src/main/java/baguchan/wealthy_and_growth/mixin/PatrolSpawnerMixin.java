@@ -45,7 +45,7 @@ public class PatrolSpawnerMixin {
 						} else {
 							Player player = level.players().get(random.nextInt(j));
 
-							if (!TargetUtils.canTarget(player, random, 0.2F)) {
+							if (!TargetUtils.canTarget(player, random, 0.0F)) {
 								callbackinfo.setReturnValue(0);
 							}
 							if (player.isSpectator()) {
