@@ -20,6 +20,7 @@ public class WAGConfig {
 	public static class Common {
 
 		public final ForgeConfigSpec.BooleanValue revampedPatrol;
+		public final ForgeConfigSpec.IntValue patrolNextTick;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> seedWhitelist;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> plantableCropWhitelist;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> cropWhitelist;
@@ -30,6 +31,9 @@ public class WAGConfig {
 			revampedPatrol = builder
 					.comment("Enable Pillager Patrol Revamped Mechanic.")
 					.define("Revamped Patrol", true);
+			patrolNextTick = builder
+					.comment("Set the Pillager Patrol Next Tick.")
+					.defineInRange("Pillager Patrol Next Tick", 12000, 6000, 48000);
 			seedWhitelist = builder
 					.comment("Add Item for What Villager can plant seed and compostable [example: farmersdelight:cabbage_seeds]")
 					.defineList("Villager's Seed Whitelist"

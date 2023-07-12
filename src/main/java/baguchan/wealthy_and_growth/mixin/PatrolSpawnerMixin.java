@@ -36,7 +36,7 @@ public class PatrolSpawnerMixin {
 				if (this.nextTick > 0) {
 					callbackinfo.setReturnValue(0);
 				} else {
-					this.nextTick += 12000 + random.nextInt(1200);
+					this.nextTick += WAGConfig.COMMON.patrolNextTick.get() + random.nextInt(1200);
 					long i = level.getDayTime() / 24000L;
 					if (i >= 5L && level.isDay()) {
 						int j = level.players().size();
@@ -93,6 +93,7 @@ public class PatrolSpawnerMixin {
 					}
 				}
 			}
+			callbackinfo.setReturnValue(0);
 		}
 	}
 
