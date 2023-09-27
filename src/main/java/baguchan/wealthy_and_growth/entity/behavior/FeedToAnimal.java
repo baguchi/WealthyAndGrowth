@@ -36,8 +36,6 @@ public class FeedToAnimal extends Behavior<Villager> {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FARMER) {
 			return false;
-		} else if (!p_23175_.wantsMoreFood()) {
-			return false;
 		} else {
 
 			List<Animal> animals = p_23175_.level().getNearbyEntities(Animal.class, TargetingConditions.forCombat().range(16D), p_23175_, p_23175_.getBoundingBox().inflate(8, 8, 8));
