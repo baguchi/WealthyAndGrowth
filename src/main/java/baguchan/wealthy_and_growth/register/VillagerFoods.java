@@ -33,31 +33,12 @@ public class VillagerFoods {
 		PLANTS_ITEMS.clear();
 
 		//VANILLA
-		FOOD_POINTS.put(Items.BREAD, 4);
-		FOOD_POINTS.put(Items.POTATO, 1);
-		FOOD_POINTS.put(Items.CARROT, 1);
-		FOOD_POINTS.put(Items.BEETROOT, 1);
 		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
 		FOOD_POINTS.put(Items.MELON_SLICE, 2);
 
-		WANTED_ITEMS.add(Items.BREAD);
-		WANTED_ITEMS.add(Items.POTATO);
-		WANTED_ITEMS.add(Items.CARROT);
-		WANTED_ITEMS.add(Items.BEETROOT);
-		WANTED_ITEMS.add(Items.BEETROOT_SEEDS);
-		WANTED_ITEMS.add(Items.WHEAT_SEEDS);
-		WANTED_ITEMS.add(Items.WHEAT);
 		WANTED_ITEMS.add(Items.PUMPKIN);
 		WANTED_ITEMS.add(Items.PUMPKIN_PIE);
 		WANTED_ITEMS.add(Items.MELON_SLICE);
-
-		COMPOSTABLE_ITEMS.add(Items.BEETROOT_SEEDS);
-		COMPOSTABLE_ITEMS.add(Items.WHEAT_SEEDS);
-
-		PLANTS_ITEMS.add(Items.BEETROOT_SEEDS);
-		PLANTS_ITEMS.add(Items.WHEAT_SEEDS);
-		PLANTS_ITEMS.add(Items.POTATO);
-		PLANTS_ITEMS.add(Items.CARROT);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
@@ -101,31 +82,12 @@ public class VillagerFoods {
 		PLANTS_ITEMS.clear();
 
 		//VANILLA
-		FOOD_POINTS.put(Items.BREAD, 4);
-		FOOD_POINTS.put(Items.POTATO, 1);
-		FOOD_POINTS.put(Items.CARROT, 1);
-		FOOD_POINTS.put(Items.BEETROOT, 1);
 		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
 		FOOD_POINTS.put(Items.MELON_SLICE, 2);
 
-		WANTED_ITEMS.add(Items.BREAD);
-		WANTED_ITEMS.add(Items.POTATO);
-		WANTED_ITEMS.add(Items.CARROT);
-		WANTED_ITEMS.add(Items.BEETROOT);
-		WANTED_ITEMS.add(Items.BEETROOT_SEEDS);
-		WANTED_ITEMS.add(Items.WHEAT_SEEDS);
-		WANTED_ITEMS.add(Items.WHEAT);
 		WANTED_ITEMS.add(Items.PUMPKIN);
 		WANTED_ITEMS.add(Items.PUMPKIN_PIE);
 		WANTED_ITEMS.add(Items.MELON_SLICE);
-
-		COMPOSTABLE_ITEMS.add(Items.BEETROOT_SEEDS);
-		COMPOSTABLE_ITEMS.add(Items.WHEAT_SEEDS);
-
-		PLANTS_ITEMS.add(Items.BEETROOT_SEEDS);
-		PLANTS_ITEMS.add(Items.WHEAT_SEEDS);
-		PLANTS_ITEMS.add(Items.POTATO);
-		PLANTS_ITEMS.add(Items.CARROT);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));

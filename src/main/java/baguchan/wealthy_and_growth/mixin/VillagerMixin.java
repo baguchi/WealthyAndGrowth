@@ -46,7 +46,8 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 							this.foodLevel = (byte) (this.foodLevel + integer);
 							this.getInventory().removeItem(i, 1);
 							if (!this.hungry()) {
-								return;
+								callbackInfo.cancel();
+								break;
 							}
 						}
 					}
@@ -54,7 +55,6 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 			}
 
 		}
-		callbackInfo.cancel();
 	}
 
 	@Shadow
@@ -78,10 +78,10 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 		}).sum();
 	}
 
-	@Inject(at = @At("HEAD"), method = "wantsToPickUp", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "wantsToPickUp", cancellable = true)
 	public void wantsToPickUp(ItemStack p_35543_, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
 		Item item = p_35543_.getItem();
-		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
+		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || callbackInfoReturnable.getReturnValue() || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
 	}
 
 	@Shadow
@@ -89,9 +89,9 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 		return null;
 	}
 
-	@Inject(at = @At("HEAD"), method = "hasFarmSeeds", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "hasFarmSeeds", cancellable = true)
 	public void hasFarmSeeds(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-		callbackInfoReturnable.setReturnValue(ContainerUtils.hasAnyOf(this.getInventory(), VillagerFoods.PLANTS_ITEMS));
+		callbackInfoReturnable.setReturnValue(ContainerUtils.hasAnyOf(this.getInventory(), VillagerFoods.PLANTS_ITEMS) || callbackInfoReturnable.getReturnValue());
 	}
 
 	@Override
