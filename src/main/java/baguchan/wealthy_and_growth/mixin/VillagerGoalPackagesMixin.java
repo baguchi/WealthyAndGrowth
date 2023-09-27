@@ -28,6 +28,15 @@ public class VillagerGoalPackagesMixin {
 		return ImmutableList.copyOf(copy);
 	}
 
+	@Inject(method = ("getIdlePackage"), at = @At("RETURN"))
+	private static ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>> getIdlePackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
+		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
+		if (profession.equals(VillagerProfession.FARMER)) {
+			copy.add(Pair.of(2, new FeedToAnimal()));
+		}
+		return ImmutableList.copyOf(copy);
+	}
+
 	@Inject(method = ("getWorkPackage"), at = @At("RETURN"))
 	private static ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>> getWorkPackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
