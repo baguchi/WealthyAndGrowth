@@ -12,7 +12,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -35,7 +34,7 @@ public class Fishing extends Behavior<Villager> {
 	private final List<BlockPos> validWaterAroundVillager = Lists.newArrayList();
 
 	public Fishing() {
-		super(ImmutableMap.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.VALUE_ABSENT, MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT));
+		super(ImmutableMap.of());
 	}
 
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
@@ -43,15 +42,15 @@ public class Fishing extends Behavior<Villager> {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FISHERMAN) {
 			return false;
-		} else if (p_23175_.hasExcessFood()) {
+		} else if (!p_23175_.getInventory().canAddItem(new ItemStack(Items.TROPICAL_FISH))) {
 			return false;
 		} else {
 			BlockPos.MutableBlockPos blockpos$mutableblockpos = p_23175_.blockPosition().mutable();
 			this.validWaterAroundVillager.clear();
 
-			for (int i = -2; i <= 2; ++i) {
+			for (int i = -3; i <= 3; ++i) {
 				for (int j = -2; j <= 2; ++j) {
-					for (int k = -2; k <= 2; ++k) {
+					for (int k = -3; k <= 3; ++k) {
 						blockpos$mutableblockpos.set(p_23175_.getX() + (double) i, p_23175_.getY() + (double) j, p_23175_.getZ() + (double) k);
 						if (this.validPos(blockpos$mutableblockpos, p_23174_)) {
 							this.validWaterAroundVillager.add(new BlockPos(blockpos$mutableblockpos));

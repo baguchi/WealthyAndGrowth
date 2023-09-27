@@ -35,10 +35,26 @@ public class VillagerFoods {
 		//VANILLA
 		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
 		FOOD_POINTS.put(Items.MELON_SLICE, 2);
+		FOOD_POINTS.put(Items.PORKCHOP, 1);
+		FOOD_POINTS.put(Items.BEEF, 1);
+		FOOD_POINTS.put(Items.MUTTON, 1);
+		FOOD_POINTS.put(Items.CHICKEN, 1);
+		FOOD_POINTS.put(Items.COOKED_PORKCHOP, 3);
+		FOOD_POINTS.put(Items.COOKED_BEEF, 3);
+		FOOD_POINTS.put(Items.COOKED_MUTTON, 3);
+		FOOD_POINTS.put(Items.COOKED_CHICKEN, 3);
 
 		WANTED_ITEMS.add(Items.PUMPKIN);
 		WANTED_ITEMS.add(Items.PUMPKIN_PIE);
 		WANTED_ITEMS.add(Items.MELON_SLICE);
+		WANTED_ITEMS.add(Items.PORKCHOP);
+		WANTED_ITEMS.add(Items.BEEF);
+		WANTED_ITEMS.add(Items.MUTTON);
+		WANTED_ITEMS.add(Items.CHICKEN);
+		WANTED_ITEMS.add(Items.COOKED_PORKCHOP);
+		WANTED_ITEMS.add(Items.COOKED_BEEF);
+		WANTED_ITEMS.add(Items.COOKED_MUTTON);
+		WANTED_ITEMS.add(Items.COOKED_CHICKEN);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));

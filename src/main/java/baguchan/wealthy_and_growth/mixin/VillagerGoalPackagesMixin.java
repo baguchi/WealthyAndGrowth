@@ -1,12 +1,11 @@
 package baguchan.wealthy_and_growth.mixin;
 
-import baguchan.wealthy_and_growth.entity.behavior.EatFoodAndHeal;
-import baguchan.wealthy_and_growth.entity.behavior.Fishing;
-import baguchan.wealthy_and_growth.entity.behavior.HarvestPumpkinAndMelon;
+import baguchan.wealthy_and_growth.entity.behavior.*;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
+import net.minecraft.world.entity.ai.behavior.WorkAtPoi;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,10 +33,18 @@ public class VillagerGoalPackagesMixin {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
 		if (profession.equals(VillagerProfession.FARMER)) {
 			copy.add(Pair.of(2, new HarvestPumpkinAndMelon()));
+			copy.add(Pair.of(2, new FeedToAnimal()));
 		}
 
 		if (profession.equals(VillagerProfession.FISHERMAN)) {
 			copy.add(Pair.of(0, new Fishing()));
+		}
+		if (profession.equals(VillagerProfession.BUTCHER)) {
+			copy.removeIf(integerPair -> {
+				return integerPair.getSecond() instanceof WorkAtPoi;
+			});
+			copy.add(Pair.of(7, new WorkAtCooking()));
+			copy.add(Pair.of(2, new Hunting()));
 		}
 		return ImmutableList.copyOf(copy);
 	}
