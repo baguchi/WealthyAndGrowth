@@ -17,8 +17,9 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ToolActions;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -44,14 +45,14 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
             VertexConsumer vertexconsumer = p_114709_.getBuffer(RENDER_TYPE);
-            vertex(vertexconsumer, matrix4f, matrix3f, p_114710_, 0.0F, 0, 0, 1);
-            vertex(vertexconsumer, matrix4f, matrix3f, p_114710_, 1.0F, 0, 1, 1);
-            vertex(vertexconsumer, matrix4f, matrix3f, p_114710_, 1.0F, 1, 1, 0);
-            vertex(vertexconsumer, matrix4f, matrix3f, p_114710_, 0.0F, 1, 0, 0);
+            vertex(vertexconsumer, matrix4f, matrix3f, p_114708_, p_114710_, 0.0F, 0, 0, 1);
+            vertex(vertexconsumer, matrix4f, matrix3f, p_114708_, p_114710_, 1.0F, 0, 1, 1);
+            vertex(vertexconsumer, matrix4f, matrix3f, p_114708_, p_114710_, 1.0F, 1, 1, 0);
+            vertex(vertexconsumer, matrix4f, matrix3f, p_114708_, p_114710_, 0.0F, 1, 0, 0);
             p_114708_.popPose();
             int i = livingEntity.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
             ItemStack itemstack = livingEntity.getMainHandItem();
-            if (!itemstack.canPerformAction(net.minecraftforge.common.ToolActions.FISHING_ROD_CAST)) {
+            if (!itemstack.canPerformAction(ToolActions.FISHING_ROD_CAST)) {
                 i = -i;
             }
 
@@ -90,7 +91,7 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
             float f5 = (float) (d5 - d10) + f3;
             float f6 = (float) (d6 - d8);
             VertexConsumer vertexconsumer1 = p_114709_.getBuffer(RenderType.lineStrip());
-            PoseStack.Pose posestack$pose1 = p_114708_.last();
+            PoseStack posestack$pose1 = p_114708_;
             int j = 16;
 
             for (int k = 0; k <= 16; ++k) {
@@ -106,11 +107,11 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
         return (float) p_114691_ / (float) p_114692_;
     }
 
-    private static void vertex(VertexConsumer p_254464_, Matrix4f p_254085_, Matrix3f p_253962_, int p_254296_, float p_253632_, int p_254132_, int p_254171_, int p_254026_) {
-        p_254464_.vertex(p_254085_, p_253632_ - 0.5F, (float) p_254132_ - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float) p_254171_, (float) p_254026_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_254296_).normal(p_253962_, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void vertex(VertexConsumer p_254464_, Matrix4f p_254085_, Matrix3f p_253962_, PoseStack poseStack, int p_254296_, float p_253632_, int p_254132_, int p_254171_, int p_254026_) {
+        p_254464_.vertex(p_254085_, p_253632_ - 0.5F, (float) p_254132_ - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float) p_254171_, (float) p_254026_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_254296_).normal(poseStack.last(), 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    private static void stringVertex(float p_174119_, float p_174120_, float p_174121_, VertexConsumer p_174122_, PoseStack.Pose p_174123_, float p_174124_, float p_174125_) {
+    private static void stringVertex(float p_174119_, float p_174120_, float p_174121_, VertexConsumer p_174122_, PoseStack p_174123_, float p_174124_, float p_174125_) {
         float f = p_174119_ * p_174124_;
         float f1 = p_174120_ * (p_174124_ * p_174124_ + p_174124_) * 0.5F + 0.25F;
         float f2 = p_174121_ * p_174124_;
@@ -121,7 +122,7 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
         f3 /= f6;
         f4 /= f6;
         f5 /= f6;
-        p_174122_.vertex(p_174123_.pose(), f, f1, f2).color(0, 0, 0, 255).normal(p_174123_.normal(), f3, f4, f5).endVertex();
+        p_174122_.vertex(p_174123_.last().pose(), f, f1, f2).color(0, 0, 0, 255).normal(p_174123_.last(), f3, f4, f5).endVertex();
     }
 
     public ResourceLocation getTextureLocation(VillagerFishingHook p_114703_) {

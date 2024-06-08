@@ -1,6 +1,7 @@
 package baguchan.wealthy_and_growth.mixin;
 
-import baguchan.wealthy_and_growth.WealthyAndGrowth;
+import baguchan.wealthy_and_growth.capability.PlayerTargetCapability;
+import baguchan.wealthy_and_growth.register.ModAttachs;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -19,14 +20,12 @@ public abstract class AbstractIllagerMixin extends Raider {
 	public void die(DamageSource p_37847_) {
 		super.die(p_37847_);
 		if(p_37847_.getEntity() instanceof Player) {
-			p_37847_.getEntity().getCapability(WealthyAndGrowth.PLAYER_TARGET_CAPABILITY).ifPresent(cap -> {
-				if(isPatrolLeader()){
-					cap.setEffectiveTargetScale(cap.getEffectiveTargetScale() + 0.1F);
-				}else {
-					cap.setEffectiveTargetScale(cap.getEffectiveTargetScale() + 0.01F);
-				}
-
-			});
+			PlayerTargetCapability cap = p_37847_.getEntity().getData(ModAttachs.PLAYER_TARGET.get());
+			if (isPatrolLeader()) {
+				cap.setEffectiveTargetScale(cap.getEffectiveTargetScale() + 0.1F);
+			} else {
+				cap.setEffectiveTargetScale(cap.getEffectiveTargetScale() + 0.01F);
+			}
 		}
 	}
 }

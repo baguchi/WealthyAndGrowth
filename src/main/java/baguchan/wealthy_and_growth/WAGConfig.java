@@ -1,7 +1,7 @@
 package baguchan.wealthy_and_growth;
 
 import com.google.common.collect.Lists;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -9,26 +9,26 @@ import java.util.function.Predicate;
 
 public class WAGConfig {
 	public static final Common COMMON;
-	public static final ForgeConfigSpec COMMON_SPEC;
+	public static final ModConfigSpec COMMON_SPEC;
 
 	static {
-		Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = specPair.getRight();
 		COMMON = specPair.getLeft();
 	}
 
 	public static class Common {
 
-		public final ForgeConfigSpec.BooleanValue revampedPatrol;
-		public final ForgeConfigSpec.IntValue patrolNextTick;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> seedWhitelist;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> plantableCropWhitelist;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> cropWhitelist;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> foodWhitelist;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> huntableWhitelist;
-		public final ForgeConfigSpec.ConfigValue<List<? extends String>> feedWhitelist;
+		public final ModConfigSpec.BooleanValue revampedPatrol;
+		public final ModConfigSpec.IntValue patrolNextTick;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> seedWhitelist;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> plantableCropWhitelist;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> cropWhitelist;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> foodWhitelist;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> huntableWhitelist;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> feedWhitelist;
 
-		public Common(ForgeConfigSpec.Builder builder) {
+		public Common(ModConfigSpec.Builder builder) {
 			Predicate<Object> validator = o -> o instanceof String;
 			revampedPatrol = builder
 					.comment("Enable Pillager Patrol Revamped Mechanic.")

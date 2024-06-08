@@ -96,8 +96,8 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 
 	@Override
 	public ItemStack eat(Level p_21067_, ItemStack p_21068_) {
-		if (p_21068_.isEdible()) {
-			heal(p_21068_.getFoodProperties(this).getNutrition());
+		if (p_21068_.getFoodProperties(this) != null) {
+			heal(p_21068_.getFoodProperties(this).nutrition());
 		}
 
 		return super.eat(p_21067_, p_21068_);

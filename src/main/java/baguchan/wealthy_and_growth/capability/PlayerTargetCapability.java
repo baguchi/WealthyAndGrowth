@@ -1,20 +1,13 @@
 package baguchan.wealthy_and_growth.capability;
 
-import baguchan.wealthy_and_growth.WealthyAndGrowth;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-public class PlayerTargetCapability implements ICapabilityProvider, ICapabilitySerializable<CompoundTag> {
+public class PlayerTargetCapability implements INBTSerializable<CompoundTag> {
 	private float effectiveTargetScale;
 
 	public void tick(LivingEntity entity) {
@@ -39,12 +32,8 @@ public class PlayerTargetCapability implements ICapabilityProvider, ICapabilityS
 		return effectiveTargetScale;
 	}
 
-	@Nonnull
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-		return (capability == WealthyAndGrowth.PLAYER_TARGET_CAPABILITY) ? LazyOptional.of(() -> this).cast() : LazyOptional.empty();
-	}
-
-	public CompoundTag serializeNBT() {
+	@Override
+	public CompoundTag serializeNBT(HolderLookup.Provider provider) {
 		CompoundTag nbt = new CompoundTag();
 
 		nbt.putFloat("EffectiveTargetScale", this.effectiveTargetScale);
@@ -52,7 +41,8 @@ public class PlayerTargetCapability implements ICapabilityProvider, ICapabilityS
 		return nbt;
 	}
 
-	public void deserializeNBT(CompoundTag nbt) {
+	@Override
+	public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
 		this.effectiveTargetScale = nbt.getFloat("EffectiveTargetScale");
 	}
 }

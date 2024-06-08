@@ -1,34 +1,18 @@
 package baguchan.wealthy_and_growth;
 
-import baguchan.wealthy_and_growth.capability.PlayerTargetCapability;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import baguchan.wealthy_and_growth.register.ModAttachs;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-@Mod.EventBusSubscriber(modid = WealthyAndGrowth.MODID)
+@EventBusSubscriber(modid = WealthyAndGrowth.MODID)
 public class CommonEvents {
-	@SubscribeEvent
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.register(PlayerTargetCapability.class);
-	}
 
 	@SubscribeEvent
-	public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof LivingEntity) {
-			event.addCapability(new ResourceLocation(WealthyAndGrowth.MODID, "player_target"), new PlayerTargetCapability());
+	public static void onUpdate(EntityTickEvent.Post event) {
+		if (event.getEntity() instanceof LivingEntity livingEntity) {
+			livingEntity.getData(ModAttachs.PLAYER_TARGET.get()).tick(livingEntity);
 		}
-	}
-
-	@SubscribeEvent
-	public static void onUpdate(LivingEvent.LivingTickEvent event) {
-		LivingEntity livingEntity = event.getEntity();
-		livingEntity.getCapability(WealthyAndGrowth.PLAYER_TARGET_CAPABILITY).ifPresent(tofuLivingCapability -> {
-			tofuLivingCapability.tick(livingEntity);
-		});
 	}
 }

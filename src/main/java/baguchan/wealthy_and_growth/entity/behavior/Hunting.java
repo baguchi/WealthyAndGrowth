@@ -3,6 +3,7 @@ package baguchan.wealthy_and_growth.entity.behavior;
 import baguchan.wealthy_and_growth.WAGConfig;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Hunting extends Behavior<Villager> {
 	}
 
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
-		if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(p_23174_, p_23175_)) {
+		if (!EventHooks.canEntityGrief(p_23174_, p_23175_)) {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.BUTCHER) {
 			return false;
@@ -42,7 +43,7 @@ public class Hunting extends Behavior<Villager> {
 
 			if (!copy.isEmpty() && copy.size() > 5) {
 				Collections.shuffle(copy);
-				if (WAGConfig.COMMON.huntableWhitelist.get().contains(ForgeRegistries.ENTITY_TYPES.getKey(copy.get(0).getType()).toString())) {
+				if (WAGConfig.COMMON.huntableWhitelist.get().contains(BuiltInRegistries.ENTITY_TYPE.getKey(copy.get(0).getType()).toString())) {
 					if (!copy.get(0).isBaby() && p_23175_.hasLineOfSight(copy.get(0))) {
 						targetEntity = copy.get(0);
 					}

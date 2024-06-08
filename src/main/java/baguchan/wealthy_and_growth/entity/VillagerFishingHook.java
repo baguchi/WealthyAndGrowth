@@ -41,6 +41,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
@@ -100,9 +101,9 @@ public class VillagerFishingHook extends Projectile {
         this.xRotO = this.getXRot();
     }
 
-    protected void defineSynchedData() {
-        this.getEntityData().define(DATA_HOOKED_ENTITY, 0);
-        this.getEntityData().define(DATA_BITING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_HOOKED_ENTITY, 0);
+        builder.define(DATA_BITING, false);
     }
 
     public void onSyncedDataUpdated(EntityDataAccessor<?> p_37153_) {
@@ -238,7 +239,7 @@ public class VillagerFishingHook extends Projectile {
 
     private void checkCollision() {
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-        if (hitresult.getType() == HitResult.Type.MISS || !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult))
+        if (hitresult.getType() == HitResult.Type.MISS || !EventHooks.onProjectileImpact(this, hitresult))
             this.onHit(hitresult);
     }
 
@@ -408,7 +409,7 @@ public class VillagerFishingHook extends Projectile {
             } else if (this.nibble > 0) {
                 LootParams.Builder lootcontext$builder = (new LootParams.Builder((ServerLevel) this.level())).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, p_37157_).withParameter(LootContextParams.THIS_ENTITY, this).withLuck((float) this.luck);
                 lootcontext$builder.withParameter(LootContextParams.KILLER_ENTITY, this.getOwner()).withParameter(LootContextParams.THIS_ENTITY, this);
-                LootTable loottable = this.level().getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
+                LootTable loottable = this.level().getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
                 List<ItemStack> list = loottable.getRandomItems(lootcontext$builder.create(LootContextParamSets.FISHING));
                 for (ItemStack itemstack : list) {
                     ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), itemstack);

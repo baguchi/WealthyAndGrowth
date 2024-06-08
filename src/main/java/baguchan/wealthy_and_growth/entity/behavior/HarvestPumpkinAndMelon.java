@@ -15,6 +15,7 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,7 +34,7 @@ public class HarvestPumpkinAndMelon extends Behavior<Villager> {
 	}
 
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
-		if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(p_23174_, p_23175_)) {
+		if (!EventHooks.canEntityGrief(p_23174_, p_23175_)) {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FARMER) {
 			return false;

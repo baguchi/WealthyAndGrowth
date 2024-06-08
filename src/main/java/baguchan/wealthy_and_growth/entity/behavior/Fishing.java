@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Fishing extends Behavior<Villager> {
 	}
 
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
-		if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(p_23174_, p_23175_)) {
+		if (!EventHooks.canEntityGrief(p_23174_, p_23175_)) {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FISHERMAN) {
 			return false;

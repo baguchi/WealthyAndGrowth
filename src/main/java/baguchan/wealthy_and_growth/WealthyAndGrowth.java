@@ -1,19 +1,14 @@
 package baguchan.wealthy_and_growth;
 
-import baguchan.wealthy_and_growth.capability.PlayerTargetCapability;
+import baguchan.wealthy_and_growth.register.ModAttachs;
 import baguchan.wealthy_and_growth.register.ModEntities;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -25,20 +20,15 @@ public class WealthyAndGrowth
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Capability<PlayerTargetCapability> PLAYER_TARGET_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
-
-    public WealthyAndGrowth()
+    public WealthyAndGrowth(ModContainer modContainer, IEventBus modBus)
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-        ModEntities.ENTITIES_REGISTRY.register(modEventBus);
+        modBus.addListener(this::commonSetup);
+        ModAttachs.ATTACHMENT_TYPES.register(modBus);
+        ModEntities.ENTITIES_REGISTRY.register(modBus);
 
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WAGConfig.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, WAGConfig.COMMON_SPEC);
 
     }
 

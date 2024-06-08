@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
@@ -39,15 +40,15 @@ public class WorkAtCooking extends WorkAtPoi {
             quickCheck = RecipeManager.createCheck(RecipeType.SMOKING);
         }
 
-        Optional<? extends AbstractCookingRecipe> smokingRecipeRecipeHolder = quickCheck.getRecipeFor(p_24794_.getInventory(), p_24793_);
+        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> smokingRecipeRecipeHolder = quickCheck.getRecipeFor(p_24794_.getInventory(), p_24793_);
         SimpleContainer simplecontainer = p_24794_.getInventory();
         int k = simplecontainer.getContainerSize();
         BlockState blockstate = p_24796_;
 
         if (smokingRecipeRecipeHolder.isPresent()) {
             for (int l = 0; l < k; ++l) {
-                ItemStack stack = smokingRecipeRecipeHolder.get().assemble(simplecontainer, p_24793_.registryAccess());
-                if (smokingRecipeRecipeHolder.get().getIngredients().get(0).test(simplecontainer.getItem(l))) {
+                ItemStack stack = smokingRecipeRecipeHolder.get().value().assemble(simplecontainer, p_24793_.registryAccess());
+                if (smokingRecipeRecipeHolder.get().value().getIngredients().get(0).test(simplecontainer.getItem(l))) {
                     simplecontainer.setItem(l, stack);
                     break;
                 }
