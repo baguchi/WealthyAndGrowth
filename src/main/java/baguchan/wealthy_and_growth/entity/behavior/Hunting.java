@@ -13,8 +13,6 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
@@ -34,8 +32,6 @@ public class Hunting extends Behavior<Villager> {
 		if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(p_23174_, p_23175_)) {
 			return false;
 		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.BUTCHER) {
-			return false;
-		} else if (!p_23175_.getInventory().canAddItem(new ItemStack(Items.PORKCHOP))) {
 			return false;
 		} else if (p_23175_.hasExcessFood()) {
 			return false;

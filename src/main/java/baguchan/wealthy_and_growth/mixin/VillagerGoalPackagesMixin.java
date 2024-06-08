@@ -53,7 +53,7 @@ public class VillagerGoalPackagesMixin {
 				return integerPair.getSecond() instanceof WorkAtPoi;
 			});
 			copy.add(Pair.of(7, new WorkAtCooking()));
-			copy.add(Pair.of(2, new Hunting()));
+			//copy.add(Pair.of(2, new Hunting()));
 		}
 		return ImmutableList.copyOf(copy);
 	}
