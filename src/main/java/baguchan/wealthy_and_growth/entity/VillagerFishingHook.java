@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -408,7 +409,7 @@ public class VillagerFishingHook extends Projectile {
                 i = this.hookedIn instanceof ItemEntity ? 3 : 5;
             } else if (this.nibble > 0) {
                 LootParams.Builder lootcontext$builder = (new LootParams.Builder((ServerLevel) this.level())).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, p_37157_).withParameter(LootContextParams.THIS_ENTITY, this).withLuck((float) this.luck);
-                lootcontext$builder.withParameter(LootContextParams.KILLER_ENTITY, this.getOwner()).withParameter(LootContextParams.THIS_ENTITY, this);
+                lootcontext$builder.withParameter(LootContextParams.ATTACKING_ENTITY, this.getOwner()).withParameter(LootContextParams.THIS_ENTITY, this);
                 LootTable loottable = this.level().getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
                 List<ItemStack> list = loottable.getRandomItems(lootcontext$builder.create(LootContextParamSets.FISHING));
                 for (ItemStack itemstack : list) {
@@ -435,6 +436,7 @@ public class VillagerFishingHook extends Projectile {
         }
     }
 
+    @Override
     public void handleEntityEvent(byte p_37123_) {
         if (p_37123_ == 31 && this.level().isClientSide && this.hookedIn instanceof Player && ((Player) this.hookedIn).isLocalPlayer()) {
             this.pullEntity(this.hookedIn);
@@ -451,6 +453,7 @@ public class VillagerFishingHook extends Projectile {
         }
     }
 
+    @Override
     protected Entity.MovementEmission getMovementEmission() {
         return Entity.MovementEmission.NONE;
     }
@@ -483,15 +486,19 @@ public class VillagerFishingHook extends Projectile {
         return this.hookedIn;
     }
 
-    public boolean canChangeDimensions() {
+    @Override
+    public boolean canUsePortal(boolean p_352895_) {
         return false;
     }
 
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity p_352092_) {
         Entity entity = this.getOwner();
-        return new ClientboundAddEntityPacket(this, entity == null ? this.getId() : entity.getId());
+        return new ClientboundAddEntityPacket(this, p_352092_, entity == null ? this.getId() : entity.getId());
     }
 
+
+    @Override
     public void recreateFromPacket(ClientboundAddEntityPacket p_150150_) {
         super.recreateFromPacket(p_150150_);
         if (this.getOwner() == null) {

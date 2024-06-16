@@ -57,7 +57,7 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.COOKED_CHICKEN);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				WANTED_ITEMS.add(item);
 				COMPOSTABLE_ITEMS.add(item);
@@ -66,7 +66,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.plantableCropWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				WANTED_ITEMS.add(item);
 				PLANTS_ITEMS.add(item);
@@ -74,7 +74,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.cropWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				FOOD_POINTS.put(item, 2);
 				WANTED_ITEMS.add(item);
@@ -82,7 +82,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.foodWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				FOOD_POINTS.put(item, 4);
 				WANTED_ITEMS.add(item);
@@ -106,7 +106,7 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.MELON_SLICE);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				WANTED_ITEMS.add(item);
 				COMPOSTABLE_ITEMS.add(item);
@@ -115,7 +115,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.plantableCropWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				WANTED_ITEMS.add(item);
 				PLANTS_ITEMS.add(item);
@@ -123,7 +123,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.cropWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				FOOD_POINTS.put(item, 2);
 				WANTED_ITEMS.add(item);
@@ -131,7 +131,7 @@ public class VillagerFoods {
 		}
 
 		for (String name : WAGConfig.COMMON.foodWhitelist.get()) {
-			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(name));
+			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
 				FOOD_POINTS.put(item, 4);
 				WANTED_ITEMS.add(item);

@@ -36,20 +36,21 @@ public class WorkAtCooking extends WorkAtPoi {
             quickCheck = RecipeManager.createCheck(RecipeType.SMOKING);
         }
 
-        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> smokingRecipeRecipeHolder = quickCheck.getRecipeFor(p_24794_.getInventory(), p_24793_);
         SimpleContainer simplecontainer = p_24794_.getInventory();
         int k = simplecontainer.getContainerSize();
         BlockState blockstate = p_24796_;
 
-        if (smokingRecipeRecipeHolder.isPresent()) {
             for (int l = 0; l < k; ++l) {
-                ItemStack stack = smokingRecipeRecipeHolder.get().value().assemble(simplecontainer, p_24793_.registryAccess());
-                if (smokingRecipeRecipeHolder.get().value().getIngredients().get(0).test(simplecontainer.getItem(l))) {
-                    simplecontainer.setItem(l, stack);
-                    break;
+                Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> smokingRecipeRecipeHolder = quickCheck.getRecipeFor(new SingleRecipeInput(p_24794_.getInventory().getItem(l)), p_24793_);
+                if (smokingRecipeRecipeHolder.isPresent()) {
+                    ItemStack stack = smokingRecipeRecipeHolder.get().value().assemble(new SingleRecipeInput(simplecontainer.getItem(l)), p_24793_.registryAccess());
+                    if (smokingRecipeRecipeHolder.get().value().getIngredients().get(0).test(simplecontainer.getItem(l))) {
+                        simplecontainer.setItem(l, stack);
+                        break;
+                    }
                 }
             }
-        }
+
 
         this.spawnComposterFillEffects(p_24793_, p_24796_, blockpos, blockstate);
     }
