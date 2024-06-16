@@ -1,5 +1,6 @@
 package baguchan.wealthy_and_growth.client;
 
+import baguchan.wealthy_and_growth.WealthyAndGrowth;
 import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -25,7 +26,7 @@ import org.joml.Matrix4f;
 
 @OnlyIn(Dist.CLIENT)
 public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingHook> {
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/fishing_hook.png");
+    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(WealthyAndGrowth.MODID,"textures/entity/fishing_hook.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutout(TEXTURE_LOCATION);
     private static final double VIEW_BOBBING_SCALE = 960.0D;
 
@@ -108,7 +109,7 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
     }
 
     private static void vertex(VertexConsumer p_254464_, Matrix4f p_254085_, Matrix3f p_253962_, PoseStack poseStack, int p_254296_, float p_253632_, int p_254132_, int p_254171_, int p_254026_) {
-        p_254464_.vertex(p_254085_, p_253632_ - 0.5F, (float) p_254132_ - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float) p_254171_, (float) p_254026_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_254296_).normal(poseStack.last(), 0.0F, 1.0F, 0.0F).endVertex();
+        p_254464_.addVertex(p_254085_, p_253632_ - 0.5F, (float) p_254132_ - 0.5F, 0.0F).setColor(255, 255, 255, 255).setUv((float) p_254171_, (float) p_254026_).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(p_254296_, p_254171_).setNormal(poseStack.last(), 0.0F, 1.0F, 0.0F);
     }
 
     private static void stringVertex(float p_174119_, float p_174120_, float p_174121_, VertexConsumer p_174122_, PoseStack p_174123_, float p_174124_, float p_174125_) {
@@ -122,7 +123,7 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
         f3 /= f6;
         f4 /= f6;
         f5 /= f6;
-        p_174122_.vertex(p_174123_.last().pose(), f, f1, f2).color(0, 0, 0, 255).normal(p_174123_.last(), f3, f4, f5).endVertex();
+        p_174122_.addVertex(p_174123_.last().pose(), f, f1, f2).setColor(0, 0, 0, 255).setNormal(p_174123_.last(), f3, f4, f5);
     }
 
     public ResourceLocation getTextureLocation(VillagerFishingHook p_114703_) {
