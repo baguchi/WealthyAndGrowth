@@ -1,5 +1,7 @@
 package baguchan.wealthy_and_growth.mixin;
 
+import baguchan.wealthy_and_growth.api.IFishing;
+import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import baguchan.wealthy_and_growth.utils.ContainerUtils;
 import net.minecraft.world.SimpleContainer;
@@ -17,8 +19,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nullable;
+
 @Mixin(Villager.class)
-public abstract class VillagerMixin extends AbstractVillager {
+public abstract class VillagerMixin extends AbstractVillager implements IFishing {
+	@Nullable
+	public VillagerFishingHook fishing;
+
 	@Shadow
 	private int foodLevel;
 
@@ -55,6 +62,16 @@ public abstract class VillagerMixin extends AbstractVillager {
 	private boolean hungry() {
 		return false;
 	}
+
+	@Nullable
+	public VillagerFishingHook getFishingHook() {
+		return fishing;
+	}
+
+	public void setFishingHook(@Nullable VillagerFishingHook fishing) {
+		this.fishing = fishing;
+	}
+
 
 	private int countFoodPointsInInventory() {
 		SimpleContainer simplecontainer = this.getInventory();

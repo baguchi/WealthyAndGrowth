@@ -1,6 +1,7 @@
 package baguchan.wealthy_and_growth;
 
 import baguchan.wealthy_and_growth.capability.PlayerTargetCapability;
+import baguchan.wealthy_and_growth.register.ModEntities;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +32,7 @@ public class WealthyAndGrowth
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModEntities.ENTITIES_REGISTRY.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
