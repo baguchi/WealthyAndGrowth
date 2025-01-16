@@ -72,8 +72,6 @@ public class VillagerFoods {
 		FOOD_POINTS.put(Items.CARROT, 1);
 		FOOD_POINTS.put(Items.BEETROOT, 1);
 		FOOD_POINTS.put(Items.BREAD, 4);
-		WANTED_ITEMS.add(Items.TORCHFLOWER_SEEDS);
-		WANTED_ITEMS.add(Items.PITCHER_POD);
 
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
