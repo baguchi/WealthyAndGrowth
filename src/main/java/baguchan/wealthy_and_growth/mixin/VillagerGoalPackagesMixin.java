@@ -19,22 +19,34 @@ import java.util.List;
 
 @Mixin(VillagerGoalPackages.class)
 public class VillagerGoalPackagesMixin {
-	@Inject(method = ("getCorePackage"), at = @At("RETURN"))
-	private static ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>> getCorePackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
+	@Inject(method = ("getCorePackage"), at = @At("RETURN"), cancellable = true)
+	private static void getCorePackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
 
 		copy.add(Pair.of(0, new EatFoodAndHeal()));
-
-		return ImmutableList.copyOf(copy);
+		if (profession.equals(VillagerProfession.CLERIC)) {
+			copy.add(Pair.of(1, new HealVillager()));
+		}
+		ci.setReturnValue(ImmutableList.copyOf(copy));
 	}
 
-	@Inject(method = ("getWorkPackage"), at = @At("RETURN"))
-	private static ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>> getWorkPackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
+	@Inject(method = ("getIdlePackage"), at = @At("RETURN"), cancellable = true)
+	private static void getIdlePackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
+		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
+		if (profession.equals(VillagerProfession.FARMER)) {
+			copy.add(Pair.of(2, new FeedToAnimal()));
+		}
+		ci.setReturnValue(ImmutableList.copyOf(copy));
+	}
+
+	@Inject(method = ("getWorkPackage"), at = @At("RETURN"), cancellable = true)
+	private static void getWorkPackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
 		if (profession.equals(VillagerProfession.FARMER)) {
 			copy.add(Pair.of(2, new HarvestPumpkinAndMelon()));
 			copy.add(Pair.of(2, new FeedToAnimal()));
 		}
+
 
 		if (profession.equals(VillagerProfession.FISHERMAN)) {
 			copy.add(Pair.of(0, new Fishing()));
@@ -46,7 +58,7 @@ public class VillagerGoalPackagesMixin {
 			copy.add(Pair.of(7, new WorkAtCooking()));
 			//copy.add(Pair.of(2, new Hunting()));
 		}
-		return ImmutableList.copyOf(copy);
+		ci.setReturnValue(ImmutableList.copyOf(copy));
 	}
 
 	@Shadow
