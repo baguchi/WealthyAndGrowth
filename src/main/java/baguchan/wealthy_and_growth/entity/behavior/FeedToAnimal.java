@@ -27,6 +27,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 	private int timeWorkedSoFar;
 	private Animal targetEntity;
 	private Animal targetSecondEntity;
+	private int usingSlot;
 
 	public FeedToAnimal() {
 		super(ImmutableMap.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.VALUE_ABSENT, MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT));
@@ -54,6 +55,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 								return !animal.isBaby() && animal.canFallInLove() && animal.getType() == targetEntity.getType() && animal != targetEntity;
 							}).findFirst();
 							if (optional.isPresent()) {
+								this.usingSlot = i;
 								targetSecondEntity = optional.get();
 							}
 						}
@@ -77,6 +79,8 @@ public class FeedToAnimal extends Behavior<Villager> {
 		p_23189_.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
 		p_23189_.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
 		this.timeWorkedSoFar = 0;
+
+
 	}
 
 	protected void tick(ServerLevel p_23188_, Villager p_23189_, long p_23190_) {
@@ -87,6 +91,8 @@ public class FeedToAnimal extends Behavior<Villager> {
 
 			if (p_23189_.distanceToSqr(this.targetEntity) < 24.0F) {
 				this.targetEntity.setInLoveTime(600);
+				ItemStack stack = p_23189_.getInventory().getItem(this.usingSlot);
+				stack.shrink(1);
 			}
 
 		} else if (this.targetSecondEntity != null && this.targetSecondEntity.isAlive() && this.targetSecondEntity.canFallInLove()) {
@@ -95,13 +101,16 @@ public class FeedToAnimal extends Behavior<Villager> {
 
 			if (p_23189_.distanceToSqr(this.targetSecondEntity) < 24.0F) {
 				this.targetSecondEntity.setInLoveTime(600);
+				ItemStack stack = p_23189_.getInventory().getItem(this.usingSlot);
+				stack.shrink(1);
 			}
 
 		}
 	}
 
 	protected boolean canStillUse(ServerLevel p_23204_, Villager p_23205_, long p_23206_) {
-		return this.timeWorkedSoFar < 400 && (this.targetEntity != null && this.targetEntity.isAlive()) && (this.targetSecondEntity != null && this.targetSecondEntity.isAlive()) && (this.targetEntity.canFallInLove() || this.targetSecondEntity.canFallInLove());
+		ItemStack stack = p_23205_.getInventory().getItem(this.usingSlot);
+		return !stack.isEmpty() && this.timeWorkedSoFar < 400 && (this.targetEntity != null && this.targetEntity.isAlive()) && (this.targetSecondEntity != null && this.targetSecondEntity.isAlive()) && (this.targetEntity.canFallInLove() || this.targetSecondEntity.canFallInLove());
 	}
 
 	@Override
