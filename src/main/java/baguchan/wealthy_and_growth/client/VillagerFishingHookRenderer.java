@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -53,7 +53,7 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
             p_114708_.popPose();
             int i = livingEntity.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
             ItemStack itemstack = livingEntity.getMainHandItem();
-            if (!itemstack.canPerformAction(ToolActions.FISHING_ROD_CAST)) {
+            if (!itemstack.canPerformAction(ItemAbilities.FISHING_ROD_CAST)) {
                 i = -i;
             }
 
