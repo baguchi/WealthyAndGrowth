@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,7 +33,7 @@ public class WorkAtComposterMixin {
 			BlockState blockstate = p_24790_.getBlockState(globalpos.pos());
 			if (blockstate.is(Blocks.COMPOSTER)) {
 				this.makeBread(p_24791_);
-				this.makeFood(p_24791_);
+                this.wealthyAndGrowth$makeFood(p_24791_);
 				this.compostItems(p_24790_, p_24791_, globalpos, blockstate);
 			}
 
@@ -88,7 +89,8 @@ public class WorkAtComposterMixin {
 
 	}
 
-	private void makeFood(Villager p_24803_) {
+    @Unique
+    private void wealthyAndGrowth$makeFood(Villager p_24803_) {
 		SimpleContainer simplecontainer = p_24803_.getInventory();
 		if (simplecontainer.countItem(Items.PUMPKIN_PIE) <= 36) {
 			int i = simplecontainer.countItem(Items.PUMPKIN);

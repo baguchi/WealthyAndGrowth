@@ -56,6 +56,26 @@ public class VillagerFoods {
 		WANTED_ITEMS.add(Items.COOKED_MUTTON);
 		WANTED_ITEMS.add(Items.COOKED_CHICKEN);
 
+		WANTED_ITEMS.add(Items.BEETROOT_SEEDS);
+		COMPOSTABLE_ITEMS.add(Items.BEETROOT_SEEDS);
+		PLANTS_ITEMS.add(Items.BEETROOT_SEEDS);
+
+		WANTED_ITEMS.add(Items.WHEAT_SEEDS);
+		COMPOSTABLE_ITEMS.add(Items.WHEAT_SEEDS);
+		PLANTS_ITEMS.add(Items.WHEAT_SEEDS);
+		WANTED_ITEMS.add(Items.CARROT);
+		PLANTS_ITEMS.add(Items.CARROT);
+		WANTED_ITEMS.add(Items.POTATO);
+		PLANTS_ITEMS.add(Items.POTATO);
+		WANTED_ITEMS.add(Items.BAKED_POTATO);
+		WANTED_ITEMS.add(Items.BEETROOT);
+		FOOD_POINTS.put(Items.BAKED_POTATO, 2);
+		FOOD_POINTS.put(Items.POTATO, 1);
+		FOOD_POINTS.put(Items.CARROT, 1);
+		FOOD_POINTS.put(Items.BEETROOT, 1);
+		FOOD_POINTS.put(Items.BREAD, 4);
+		WANTED_ITEMS.add(Items.TORCHFLOWER_SEEDS);
+		WANTED_ITEMS.add(Items.PITCHER_POD);
 		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
 			Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(name));
 			if (item != null) {
