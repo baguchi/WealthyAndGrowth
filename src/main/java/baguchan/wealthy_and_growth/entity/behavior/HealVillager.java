@@ -55,12 +55,12 @@ public class HealVillager extends Behavior<Villager> {
             double d1 = livingEntity.getEyeY() - 1.1F - villager.getY();
             double d2 = livingEntity.getZ() + vec3.z - villager.getZ();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-            ThrownPotion thrownpotion = new ThrownPotion(villager.level(), villager);
+            ThrownPotion thrownpotion = new ThrownPotion(villager.level, villager);
             thrownpotion.setItem(PotionUtils.setPotion(Items.SPLASH_POTION.getDefaultInstance(), Potions.HEALING));
             thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
             thrownpotion.shoot(d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
             if (!villager.isSilent()) {
-                villager.level()
+                villager.level
                         .playSound(
                                 null,
                                 villager.getX(),

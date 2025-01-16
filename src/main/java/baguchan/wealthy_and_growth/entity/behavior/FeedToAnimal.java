@@ -3,7 +3,6 @@ package baguchan.wealthy_and_growth.entity.behavior;
 import baguchan.wealthy_and_growth.WAGConfig;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -16,6 +15,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +40,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 			return false;
 		} else {
 
-			List<Animal> animals = p_23175_.level().getNearbyEntities(Animal.class, TargetingConditions.forCombat().range(16D), p_23175_, p_23175_.getBoundingBox().inflate(8, 6, 8));
+			List<Animal> animals = p_23175_.level.getNearbyEntities(Animal.class, TargetingConditions.forCombat().range(16D), p_23175_, p_23175_.getBoundingBox().inflate(8, 6, 8));
 			List<Animal> copy = Lists.newArrayList(animals);
 
 			if (!copy.isEmpty() && copy.size() >= 2) {
@@ -48,7 +48,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 				for (int i = 0; i < p_23175_.getInventory().getContainerSize(); ++i) {
 					ItemStack stack = p_23175_.getInventory().getItem(i);
 
-					if (WAGConfig.COMMON.feedWhitelist.get().contains(BuiltInRegistries.ENTITY_TYPE.getKey(copy.get(0).getType()).toString())) {
+					if (WAGConfig.COMMON.feedWhitelist.get().contains(ForgeRegistries.ENTITY_TYPES.getKey(copy.get(0).getType()).toString())) {
 						if (!copy.get(0).isBaby() && copy.get(0).isFood(stack) && copy.get(0).canFallInLove() && p_23175_.hasLineOfSight(copy.get(0))) {
 							targetEntity = copy.get(0);
 							Optional<Animal> optional = copy.stream().filter(animal -> {
