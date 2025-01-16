@@ -112,50 +112,6 @@ public class VillagerFoods {
 
 	@SubscribeEvent
 	public static void reloadConfig(ModConfigEvent.Reloading event) {
-		FOOD_POINTS.clear();
-		WANTED_ITEMS.clear();
-		COMPOSTABLE_ITEMS.clear();
-		PLANTS_ITEMS.clear();
-
-		//VANILLA
-		FOOD_POINTS.put(Items.PUMPKIN_PIE, 6);
-		FOOD_POINTS.put(Items.MELON_SLICE, 2);
-
-		WANTED_ITEMS.add(Items.PUMPKIN);
-		WANTED_ITEMS.add(Items.PUMPKIN_PIE);
-		WANTED_ITEMS.add(Items.MELON_SLICE);
-
-		for (String name : WAGConfig.COMMON.seedWhitelist.get()) {
-			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
-			if (item != null) {
-				WANTED_ITEMS.add(item);
-				COMPOSTABLE_ITEMS.add(item);
-				PLANTS_ITEMS.add(item);
-			}
-		}
-
-		for (String name : WAGConfig.COMMON.plantableCropWhitelist.get()) {
-			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
-			if (item != null) {
-				WANTED_ITEMS.add(item);
-				PLANTS_ITEMS.add(item);
-			}
-		}
-
-		for (String name : WAGConfig.COMMON.cropWhitelist.get()) {
-			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
-			if (item != null) {
-				FOOD_POINTS.put(item, 2);
-				WANTED_ITEMS.add(item);
-			}
-		}
-
-		for (String name : WAGConfig.COMMON.foodWhitelist.get()) {
-			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
-			if (item != null) {
-				FOOD_POINTS.put(item, 4);
-				WANTED_ITEMS.add(item);
-			}
-		}
+		registerFoods();
 	}
 }
