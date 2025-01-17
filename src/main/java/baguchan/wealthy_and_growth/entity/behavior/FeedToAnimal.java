@@ -43,7 +43,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 			List<Animal> animals = p_23175_.level.getNearbyEntities(Animal.class, TargetingConditions.forCombat().range(16D), p_23175_, p_23175_.getBoundingBox().inflate(8, 6, 8));
 			List<Animal> copy = Lists.newArrayList(animals);
 
-			if (!copy.isEmpty() && copy.size() >= 2) {
+			if (!copy.isEmpty() && copy.size() >= 2 && copy.size() < 6) {
 				Collections.shuffle(copy);
 				for (int i = 0; i < p_23175_.getInventory().getContainerSize(); ++i) {
 					ItemStack stack = p_23175_.getInventory().getItem(i);
