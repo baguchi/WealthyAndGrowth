@@ -51,7 +51,7 @@ public class HealVillager extends Behavior<Villager> {
             }
         }
 
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.getHealth() < livingEntity.getMaxHealth()) {
             Vec3 vec3 = livingEntity.getDeltaMovement();
             double d0 = livingEntity.getX() + vec3.x - villager.getX();
             double d1 = livingEntity.getEyeY() - 1.1F - villager.getY();
