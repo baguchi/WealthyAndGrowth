@@ -3,6 +3,9 @@ package baguchan.wealthy_and_growth.register;
 import baguchan.wealthy_and_growth.WealthyAndGrowth;
 import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -13,7 +16,7 @@ public class ModEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<VillagerFishingHook>> FISHING_HOOK = ENTITIES_REGISTRY.register("fishing_hook", () -> EntityType.Builder.<VillagerFishingHook>of(VillagerFishingHook::new, MobCategory.MISC).noSave().noSummon().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(5).build(prefix("fishing_hook")));
 
-    private static String prefix(String path) {
-        return WealthyAndGrowth.MODID + "." + path;
+    private static ResourceKey<EntityType<?>> prefix(String path) {
+        return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(WealthyAndGrowth.MODID, path));
     }
 }

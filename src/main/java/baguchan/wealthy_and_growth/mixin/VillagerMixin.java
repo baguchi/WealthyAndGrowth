@@ -4,6 +4,8 @@ import baguchan.wealthy_and_growth.api.IFishing;
 import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import baguchan.wealthy_and_growth.register.VillagerFoods;
 import baguchan.wealthy_and_growth.utils.ContainerUtils;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -80,10 +82,20 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 	}
 
 	@Inject(at = @At("RETURN"), method = "wantsToPickUp", cancellable = true)
-	public void wantsToPickUp(ItemStack p_35543_, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+	public void wantsToPickUp(ServerLevel p_376823_, ItemStack p_35543_, CallbackInfoReturnable<Boolean> cir) {
 		Item item = p_35543_.getItem();
-		callbackInfoReturnable.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || callbackInfoReturnable.getReturnValue() || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
+		cir.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || cir.getReturnValue() || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
 	}
+
+	@Override
+	public void stopUsingItem() {
+		FoodProperties foodProperties = this.getUseItem().get(DataComponents.FOOD);
+		if (foodProperties != null) {
+			this.heal(foodProperties.nutrition());
+		}
+		super.stopUsingItem();
+	}
+
 
 	@Shadow
 	public VillagerData getVillagerData() {
@@ -93,13 +105,5 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 	@Inject(at = @At("RETURN"), method = "hasFarmSeeds", cancellable = true)
 	public void hasFarmSeeds(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
 		callbackInfoReturnable.setReturnValue(ContainerUtils.hasAnyOf(this.getInventory(), VillagerFoods.PLANTS_ITEMS) || callbackInfoReturnable.getReturnValue());
-	}
-
-	@Override
-	public ItemStack eat(Level p_347678_, ItemStack p_347507_, FoodProperties foodProperties) {
-		if (foodProperties != null) {
-			heal(foodProperties.nutrition());
-		}
-		return super.eat(p_347678_, p_347507_, foodProperties);
 	}
 }

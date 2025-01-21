@@ -43,8 +43,9 @@ public class WorkAtCooking extends WorkAtPoi {
             for (int l = 0; l < k; ++l) {
                 Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> smokingRecipeRecipeHolder = quickCheck.getRecipeFor(new SingleRecipeInput(p_24794_.getInventory().getItem(l)), p_24793_);
                 if (smokingRecipeRecipeHolder.isPresent()) {
-                    ItemStack stack = smokingRecipeRecipeHolder.get().value().assemble(new SingleRecipeInput(simplecontainer.getItem(l)), p_24793_.registryAccess());
-                    if (smokingRecipeRecipeHolder.get().value().getIngredients().get(0).test(simplecontainer.getItem(l))) {
+                    if (smokingRecipeRecipeHolder.get().value().matches(new SingleRecipeInput(simplecontainer.getItem(l)), p_24793_.getLevel())) {
+                        ItemStack stack = smokingRecipeRecipeHolder.get().value().assemble(new SingleRecipeInput(simplecontainer.getItem(l)), p_24793_.registryAccess());
+
                         simplecontainer.setItem(l, stack);
                         break;
                     }

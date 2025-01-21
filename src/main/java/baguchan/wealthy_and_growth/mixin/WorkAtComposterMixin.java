@@ -32,14 +32,18 @@ public class WorkAtComposterMixin {
 			GlobalPos globalpos = optional.get();
 			BlockState blockstate = p_24790_.getBlockState(globalpos.pos());
 			if (blockstate.is(Blocks.COMPOSTER)) {
-				this.makeBread(p_24791_);
-                this.wealthyAndGrowth$makeFood(p_24791_);
+				this.makeBread(p_24790_, p_24791_);
+				this.wealthyAndGrowth$makeFood(p_24790_, p_24791_);
 				this.compostItems(p_24790_, p_24791_, globalpos, blockstate);
 			}
 
 		}
 		callbackInfo.cancel();
 
+	}
+
+	@Shadow
+	private void makeBread(ServerLevel p_376900_, Villager p_24803_) {
 	}
 
 	private void compostItems(ServerLevel p_24793_, Villager p_24794_, GlobalPos p_24795_, BlockState p_24796_) {
@@ -84,13 +88,9 @@ public class WorkAtComposterMixin {
 	private void spawnComposterFillEffects(ServerLevel p_24798_, BlockState p_24799_, BlockPos p_24800_, BlockState p_24801_) {
 	}
 
-	@Shadow
-	private void makeBread(Villager p_24803_) {
-
-	}
 
     @Unique
-    private void wealthyAndGrowth$makeFood(Villager p_24803_) {
+	private void wealthyAndGrowth$makeFood(ServerLevel p_24790_, Villager p_24803_) {
 		SimpleContainer simplecontainer = p_24803_.getInventory();
 		if (simplecontainer.countItem(Items.PUMPKIN_PIE) <= 36) {
 			int i = simplecontainer.countItem(Items.PUMPKIN);
@@ -99,7 +99,7 @@ public class WorkAtComposterMixin {
 				simplecontainer.removeItemType(Items.PUMPKIN, i);
 				ItemStack itemstack = simplecontainer.addItem(new ItemStack(Items.PUMPKIN_PIE, i1));
 				if (!itemstack.isEmpty()) {
-					p_24803_.spawnAtLocation(itemstack, 0.5F);
+					p_24803_.spawnAtLocation(p_24790_, itemstack, 0.5F);
 				}
 
 			}

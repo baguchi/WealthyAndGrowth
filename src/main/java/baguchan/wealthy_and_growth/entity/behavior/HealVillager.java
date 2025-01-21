@@ -10,7 +10,9 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -55,10 +57,9 @@ public class HealVillager extends Behavior<Villager> {
             double d1 = livingEntity.getEyeY() - 1.1F - villager.getY();
             double d2 = livingEntity.getZ() + vec3.z - villager.getZ();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-            ThrownPotion thrownpotion = new ThrownPotion(villager.level(), villager);
-            thrownpotion.setItem(PotionContents.createItemStack(Items.SPLASH_POTION, Potions.HEALING));
-            thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
-            thrownpotion.shoot(d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
+            ItemStack itemstack = PotionContents.createItemStack(Items.SPLASH_POTION, Potions.HEALING);
+
+            Projectile.spawnProjectileUsingShoot(ThrownPotion::new, serverLevel, itemstack, villager, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
             if (!villager.isSilent()) {
                 villager.level()
                         .playSound(
@@ -72,8 +73,6 @@ public class HealVillager extends Behavior<Villager> {
                                 0.8F + villager.getRandom().nextFloat() * 0.4F
                         );
             }
-
-            serverLevel.addFreshEntity(thrownpotion);
         }
 
     }

@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -87,8 +87,8 @@ public class HarvestFarmlandMixin extends Behavior<Villager> {
 								p_23196_.setBlockAndUpdate(this.aboveFarmlandPos, blockstate4);
 								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate4));
 								flag = true;
-							} else if (itemstack.getItem() instanceof ItemNameBlockItem) {
-								BlockState blockstate5 = ((ItemNameBlockItem) itemstack.getItem()).getBlock().defaultBlockState();
+							} else if (itemstack.getItem() instanceof BlockItem) {
+								BlockState blockstate5 = ((BlockItem) itemstack.getItem()).getBlock().defaultBlockState();
 								p_23196_.setBlockAndUpdate(aboveFarmlandPos, blockstate5);
 								p_23196_.gameEvent(GameEvent.BLOCK_PLACE, this.aboveFarmlandPos, GameEvent.Context.of(p_23197_, blockstate5));
 

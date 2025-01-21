@@ -6,13 +6,9 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -70,7 +66,6 @@ public class VillagerFishingHook extends Projectile {
 
     private VillagerFishingHook(EntityType<? extends VillagerFishingHook> p_150141_, Level p_150142_, int p_150143_, int p_150144_) {
         super(p_150141_, p_150142_);
-        this.noCulling = true;
         this.luck = Math.max(0, p_150143_);
         this.lureSpeed = Math.max(0, p_150144_);
     }
@@ -123,14 +118,17 @@ public class VillagerFishingHook extends Projectile {
         super.onSyncedDataUpdated(p_37153_);
     }
 
+    @Override
     public boolean shouldRenderAtSqrDistance(double p_37125_) {
         double d0 = 64.0D;
         return p_37125_ < 4096.0D;
     }
 
-    public void lerpTo(double p_37127_, double p_37128_, double p_37129_, float p_37130_, float p_37131_, int p_37132_, boolean p_37133_) {
+    @Override
+    public void lerpTo(double p_19896_, double p_19897_, double p_19898_, float p_19899_, float p_19900_, int p_19901_) {
     }
 
+    @Override
     public void tick() {
         this.syncronizedRandom.setSeed(this.getUUID().getLeastSignificantBits() ^ this.level().getGameTime());
         super.tick();
@@ -244,10 +242,12 @@ public class VillagerFishingHook extends Projectile {
             this.onHit(hitresult);
     }
 
+    @Override
     protected boolean canHitEntity(Entity p_37135_) {
         return super.canHitEntity(p_37135_) || p_37135_.isAlive() && p_37135_ instanceof ItemEntity;
     }
 
+    @Override
     protected void onHitEntity(EntityHitResult p_37144_) {
         super.onHitEntity(p_37144_);
         if (!this.level().isClientSide) {
@@ -256,6 +256,7 @@ public class VillagerFishingHook extends Projectile {
 
     }
 
+    @Override
     protected void onHitBlock(BlockHitResult p_37142_) {
         super.onHitBlock(p_37142_);
         this.setDeltaMovement(this.getDeltaMovement().normalize().scale(p_37142_.distanceTo(this)));
@@ -393,9 +394,11 @@ public class VillagerFishingHook extends Projectile {
         return this.openWater;
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag p_37161_) {
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag p_37151_) {
     }
 
@@ -453,34 +456,6 @@ public class VillagerFishingHook extends Projectile {
         }
     }
 
-    @Override
-    protected Entity.MovementEmission getMovementEmission() {
-        return Entity.MovementEmission.NONE;
-    }
-
-    public void remove(Entity.RemovalReason p_150146_) {
-        this.updateOwnerInfo(null);
-        super.remove(p_150146_);
-    }
-
-    public void onClientRemoval() {
-        this.updateOwnerInfo(null);
-    }
-
-    public void setOwner(@Nullable Entity p_150154_) {
-        super.setOwner(p_150154_);
-        this.updateOwnerInfo(this);
-    }
-
-
-    private void updateOwnerInfo(@Nullable VillagerFishingHook p_150148_) {
-        Entity entity = this.getOwner();
-        if (entity != null && entity instanceof IFishing villager) {
-            villager.setFishingHook(p_150148_);
-        }
-
-    }
-
     @Nullable
     public Entity getHookedIn() {
         return this.hookedIn;
@@ -492,22 +467,34 @@ public class VillagerFishingHook extends Projectile {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity p_352092_) {
-        Entity entity = this.getOwner();
-        return new ClientboundAddEntityPacket(this, p_352092_, entity == null ? this.getId() : entity.getId());
+    protected Entity.MovementEmission getMovementEmission() {
+        return Entity.MovementEmission.NONE;
     }
-
 
     @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket p_150150_) {
-        super.recreateFromPacket(p_150150_);
-        if (this.getOwner() == null) {
-            int i = p_150150_.getData();
-            LOGGER.error("Failed to recreate fishing hook on client. {} (id: {}) is not a valid owner.", this.level().getEntity(i), i);
-            this.kill();
-        }
-
+    public void remove(Entity.RemovalReason p_150146_) {
+        this.updateOwnerInfo(null);
+        super.remove(p_150146_);
     }
+
+    @Override
+    public void onClientRemoval() {
+        this.updateOwnerInfo(null);
+    }
+
+    @Override
+    public void setOwner(@Nullable Entity p_150154_) {
+        super.setOwner(p_150154_);
+        this.updateOwnerInfo(this);
+    }
+
+    private void updateOwnerInfo(@Nullable VillagerFishingHook p_150148_) {
+        Entity player = this.getOwner();
+        if (player instanceof IFishing fishing) {
+            fishing.setFishingHook(p_150148_);
+        }
+    }
+
 
     public static enum FishHookState {
         FLYING,

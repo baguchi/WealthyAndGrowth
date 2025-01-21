@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -40,7 +39,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 			return false;
 		} else {
 
-			List<Animal> animals = p_23175_.level().getNearbyEntities(Animal.class, TargetingConditions.forCombat().range(16D), p_23175_, p_23175_.getBoundingBox().inflate(8, 6, 8));
+			List<Animal> animals = p_23175_.level().getEntitiesOfClass(Animal.class, p_23175_.getBoundingBox().inflate(8, 6, 8));
 			List<Animal> copy = Lists.newArrayList(animals);
 
 			if (!copy.isEmpty() && copy.size() >= 2 && copy.size() < 6) {
