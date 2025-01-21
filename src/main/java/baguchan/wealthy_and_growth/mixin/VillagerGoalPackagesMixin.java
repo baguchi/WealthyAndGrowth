@@ -24,9 +24,7 @@ public class VillagerGoalPackagesMixin {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
 
 		copy.add(Pair.of(0, new EatFoodAndHeal()));
-		if (profession.equals(VillagerProfession.CLERIC)) {
-			copy.add(Pair.of(1, new HealVillager()));
-		}
+
 		ci.setReturnValue(ImmutableList.copyOf(copy));
 	}
 
@@ -34,7 +32,10 @@ public class VillagerGoalPackagesMixin {
 	private static void getIdlePackage(VillagerProfession profession, float p_24591_, CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Behavior<? super Villager>>>> ci) {
 		List<Pair<Integer, ? extends Behavior<? super Villager>>> copy = new ArrayList<>(ci.getReturnValue());
 		if (profession.equals(VillagerProfession.FARMER)) {
-			copy.add(Pair.of(2, new FeedToAnimal()));
+			copy.add(Pair.of(1, new FeedToAnimal()));
+		}
+		if (profession.equals(VillagerProfession.CLERIC)) {
+			copy.add(Pair.of(1, new HealVillager()));
 		}
 		ci.setReturnValue(ImmutableList.copyOf(copy));
 	}
@@ -45,6 +46,9 @@ public class VillagerGoalPackagesMixin {
 		if (profession.equals(VillagerProfession.FARMER)) {
 			copy.add(Pair.of(2, new HarvestPumpkinAndMelon()));
 			copy.add(Pair.of(2, new FeedToAnimal()));
+		}
+		if (profession.equals(VillagerProfession.CLERIC)) {
+			copy.add(Pair.of(2, new HealVillager()));
 		}
 
 
