@@ -1,13 +1,14 @@
 package baguchan.wealthy_and_growth.capability;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
-public class PlayerTargetCapability implements INBTSerializable<CompoundTag> {
+public class PlayerTargetCapability implements ValueIOSerializable {
 	private float effectiveTargetScale;
 
 	public void tick(LivingEntity entity) {
@@ -33,16 +34,16 @@ public class PlayerTargetCapability implements INBTSerializable<CompoundTag> {
 	}
 
 	@Override
-	public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+	public void serialize(ValueOutput valueOutput) {
 		CompoundTag nbt = new CompoundTag();
 
 		nbt.putFloat("EffectiveTargetScale", this.effectiveTargetScale);
 
-		return nbt;
 	}
 
 	@Override
-	public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-		this.effectiveTargetScale = nbt.getFloat("EffectiveTargetScale");
+	public void deserialize(ValueInput valueInput) {
+		this.effectiveTargetScale = valueInput.getFloatOr("EffectiveTargetScale", 0);
+
 	}
 }

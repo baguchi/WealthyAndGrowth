@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@EventBusSubscriber(modid = WealthyAndGrowth.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = WealthyAndGrowth.MODID)
 public class VillagerFoods {
 	public static final Map<Item, Integer> FOOD_POINTS = Maps.newHashMap();
 	public static final Set<Item> WANTED_ITEMS = Sets.newHashSet();

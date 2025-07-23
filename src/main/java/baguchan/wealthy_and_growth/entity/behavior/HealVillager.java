@@ -11,7 +11,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.projectile.ThrownSplashPotion;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -29,7 +29,7 @@ public class HealVillager extends Behavior<Villager> {
     protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
         if (p_23174_.getGameTime() - nextOfStartTime < 80L) {
             return false;
-        } else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.CLERIC) {
+        } else if (p_23175_.getVillagerData().profession() != VillagerProfession.CLERIC) {
             return false;
         } else {
             return true;
@@ -59,7 +59,7 @@ public class HealVillager extends Behavior<Villager> {
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
             ItemStack itemstack = PotionContents.createItemStack(Items.SPLASH_POTION, Potions.HEALING);
 
-            Projectile.spawnProjectileUsingShoot(ThrownPotion::new, serverLevel, itemstack, villager, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
+            Projectile.spawnProjectileUsingShoot(ThrownSplashPotion::new, serverLevel, itemstack, villager, d0, d1 + d3 * 0.2, d2, 0.75F, 8.0F);
             if (!villager.isSilent()) {
                 villager.level()
                         .playSound(

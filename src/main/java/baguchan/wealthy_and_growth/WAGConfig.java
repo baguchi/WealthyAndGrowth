@@ -20,6 +20,11 @@ public class WAGConfig {
 	public static class Common {
 
 		public final ModConfigSpec.BooleanValue revampedPatrol;
+		public final ModConfigSpec.BooleanValue eatFood;
+		public final ModConfigSpec.BooleanValue harvestPumpkinAndMelon;
+		public final ModConfigSpec.BooleanValue healWithPotion;
+		public final ModConfigSpec.BooleanValue fishing;
+		public final ModConfigSpec.BooleanValue cookingMeat;
 		public final ModConfigSpec.IntValue patrolNextTick;
 		public final ModConfigSpec.ConfigValue<List<? extends String>> seedWhitelist;
 		public final ModConfigSpec.ConfigValue<List<? extends String>> plantableCropWhitelist;
@@ -33,6 +38,21 @@ public class WAGConfig {
 			revampedPatrol = builder
 					.comment("Enable Pillager Patrol Revamped Mechanic.")
 					.define("Revamped Patrol", true);
+			eatFood = builder
+					.comment("Enable Villager Eat Food.")
+					.define("Villager Eat Food", true);
+			harvestPumpkinAndMelon = builder
+					.comment("Enable Harvest Pumpkin And Melon.")
+					.define("Harvest Pumpkin And Melon", true);
+			healWithPotion = builder
+					.comment("Enable Villager do Heal With Potion.")
+					.define("Heal With Potion", true);
+			fishing = builder
+					.comment("Enable Villager Fishing.")
+					.define("Villager Fishing", true);
+			cookingMeat = builder
+					.comment("Enable Villager Cooking Meat.")
+					.define("Villager Cooking Meat", true);
 			patrolNextTick = builder
 					.comment("Set the Pillager Patrol Next Tick.")
 					.defineInRange("Pillager Patrol Next Tick", 12000, 6000, 48000);

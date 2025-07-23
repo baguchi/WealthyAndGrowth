@@ -5,7 +5,6 @@ import baguchan.wealthy_and_growth.register.ModEntities;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -14,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
@@ -29,6 +25,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -41,6 +39,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -63,6 +62,7 @@ public class VillagerFishingHook extends Projectile {
     public VillagerFishingHook.FishHookState currentState = VillagerFishingHook.FishHookState.FLYING;
     private final int luck;
     private final int lureSpeed;
+    private final InterpolationHandler interpolationHandler = new InterpolationHandler(this);
 
     private VillagerFishingHook(EntityType<? extends VillagerFishingHook> p_150141_, Level p_150142_, int p_150143_, int p_150144_) {
         super(p_150141_, p_150142_);
@@ -86,7 +86,7 @@ public class VillagerFishingHook extends Projectile {
         double d0 = p_37106_.getX() - (double) f3 * 0.3D;
         double d1 = p_37106_.getEyeY();
         double d2 = p_37106_.getZ() - (double) f2 * 0.3D;
-        this.moveTo(d0, d1, d2, f1, f);
+        this.snapTo(d0, d1, d2, f1, f);
         Vec3 vec3 = new Vec3((double) (-f3), (double) Mth.clamp(-(f5 / f4), -5.0F, 5.0F), (double) (-f2));
         double d3 = vec3.length();
         vec3 = vec3.multiply(0.6D / d3 + this.random.triangle(0.5D, 0.0103365D), 0.6D / d3 + this.random.triangle(0.5D, 0.0103365D), 0.6D / d3 + this.random.triangle(0.5D, 0.0103365D));
@@ -97,11 +97,20 @@ public class VillagerFishingHook extends Projectile {
         this.xRotO = this.getXRot();
     }
 
+    @Nonnull
+    @Override
+    public InterpolationHandler getInterpolation() {
+        return this.interpolationHandler;
+    }
+
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(DATA_HOOKED_ENTITY, 0);
         builder.define(DATA_BITING, false);
     }
 
+    @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> p_37153_) {
         if (DATA_HOOKED_ENTITY.equals(p_37153_)) {
             int i = this.getEntityData().get(DATA_HOOKED_ENTITY);
@@ -124,9 +133,6 @@ public class VillagerFishingHook extends Projectile {
         return p_37125_ < 4096.0D;
     }
 
-    @Override
-    public void lerpTo(double p_19896_, double p_19897_, double p_19898_, float p_19899_, float p_19900_, int p_19901_) {
-    }
 
     @Override
     public void tick() {
@@ -395,11 +401,11 @@ public class VillagerFishingHook extends Projectile {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag p_37161_) {
+    public void addAdditionalSaveData(ValueOutput p_37161_) {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag p_37151_) {
+    public void readAdditionalSaveData(ValueInput p_37151_) {
     }
 
     public int retrieve(ItemStack p_37157_) {

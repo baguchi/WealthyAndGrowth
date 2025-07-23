@@ -84,18 +84,17 @@ public abstract class VillagerMixin extends AbstractVillager implements IFishing
 	@Inject(at = @At("RETURN"), method = "wantsToPickUp", cancellable = true)
 	public void wantsToPickUp(ServerLevel p_376823_, ItemStack p_35543_, CallbackInfoReturnable<Boolean> cir) {
 		Item item = p_35543_.getItem();
-		cir.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || cir.getReturnValue() || this.getVillagerData().getProfession().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
+		cir.setReturnValue((VillagerFoods.WANTED_ITEMS.contains(item) || cir.getReturnValue() || this.getVillagerData().profession().value().requestedItems().contains(item)) && this.getInventory().canAddItem(p_35543_));
 	}
 
 	@Override
-	public void stopUsingItem() {
+	protected void completeUsingItem() {
 		FoodProperties foodProperties = this.getUseItem().get(DataComponents.FOOD);
 		if (foodProperties != null) {
 			this.heal(foodProperties.nutrition());
 		}
-		super.stopUsingItem();
+		super.completeUsingItem();
 	}
-
 
 	@Shadow
 	public VillagerData getVillagerData() {

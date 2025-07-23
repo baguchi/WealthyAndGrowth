@@ -35,7 +35,7 @@ public class FeedToAnimal extends Behavior<Villager> {
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
 		if (!EventHooks.canEntityGrief(p_23174_, p_23175_)) {
 			return false;
-		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FARMER) {
+		} else if (p_23175_.getVillagerData().profession() != VillagerProfession.FARMER) {
 			return false;
 		} else {
 

@@ -41,7 +41,7 @@ public class Fishing extends Behavior<Villager> {
 	protected boolean checkExtraStartConditions(ServerLevel p_23174_, Villager p_23175_) {
 		if (!EventHooks.canEntityGrief(p_23174_, p_23175_)) {
 			return false;
-		} else if (p_23175_.getVillagerData().getProfession() != VillagerProfession.FISHERMAN) {
+		} else if (p_23175_.getVillagerData().profession() != VillagerProfession.FISHERMAN) {
 			return false;
 		} else if (!p_23175_.getInventory().canAddItem(new ItemStack(Items.TROPICAL_FISH))) {
 			return false;
