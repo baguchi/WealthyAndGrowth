@@ -64,7 +64,7 @@ public class WorkAtComposterMixin {
 
 
     @Inject(at = @At("HEAD"), method = "makeBread")
-    private void wealthyAndGrowth$makeFood(ServerLevel p_376900_, Villager p_24803_, CallbackInfo ci) {
+    private void wealthyAndGrowth$makeFood(Villager p_24803_, CallbackInfo ci) {
         SimpleContainer simplecontainer = p_24803_.getInventory();
         if (simplecontainer.countItem(Items.PUMPKIN_PIE) <= 36) {
             int i = simplecontainer.countItem(Items.PUMPKIN);
@@ -73,7 +73,7 @@ public class WorkAtComposterMixin {
                 simplecontainer.removeItemType(Items.PUMPKIN, i);
                 ItemStack itemstack = simplecontainer.addItem(new ItemStack(Items.PUMPKIN_PIE, i1));
                 if (!itemstack.isEmpty()) {
-                    p_24803_.spawnAtLocation(p_376900_, itemstack, 0.5F);
+                    p_24803_.spawnAtLocation(itemstack, 0.5F);
                 }
 
             }
