@@ -6,47 +6,22 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ai.behavior.WorkAtComposter;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-
 @Mixin(WorkAtComposter.class)
 public class WorkAtComposterMixin {
 
-	@Inject(at = @At("HEAD"), method = "useWorkstation", cancellable = true)
-	protected void useWorkstation(ServerLevel p_24790_, Villager p_24791_, CallbackInfo callbackInfo) {
-		Optional<GlobalPos> optional = p_24791_.getBrain().getMemory(MemoryModuleType.JOB_SITE);
-		if (optional.isPresent()) {
-			GlobalPos globalpos = optional.get();
-			BlockState blockstate = p_24790_.getBlockState(globalpos.pos());
-			if (blockstate.is(Blocks.COMPOSTER)) {
-				this.makeBread(p_24790_, p_24791_);
-				this.wealthyAndGrowth$makeFood(p_24790_, p_24791_);
-				this.compostItems(p_24790_, p_24791_, globalpos, blockstate);
-			}
-
-		}
-		callbackInfo.cancel();
-
-	}
-
-	@Shadow
-	private void makeBread(ServerLevel p_376900_, Villager p_24803_) {
-	}
-
-	private void compostItems(ServerLevel p_24793_, Villager p_24794_, GlobalPos p_24795_, BlockState p_24796_) {
+    @Inject(at = @At("HEAD"), method = "compostItems", cancellable = true)
+    private void compostItems(ServerLevel p_24793_, Villager p_24794_, GlobalPos p_24795_, BlockState p_24796_, CallbackInfo ci) {
 		BlockPos blockpos = p_24795_.pos();
 		if (p_24796_.getValue(ComposterBlock.LEVEL) == 8) {
 			p_24796_ = ComposterBlock.extractProduce(p_24794_, p_24796_, p_24793_, blockpos);
@@ -74,14 +49,13 @@ public class WorkAtComposterMixin {
 						blockstate = ComposterBlock.insertItem(p_24794_, blockstate, p_24793_, itemstack, blockpos);
 						if (blockstate.getValue(ComposterBlock.LEVEL) == 7) {
 							this.spawnComposterFillEffects(p_24793_, p_24796_, blockpos, blockstate);
-							return;
+                            ci.cancel();
+                            return;
 						}
 					}
 				}
 			}
 		}
-
-		this.spawnComposterFillEffects(p_24793_, p_24796_, blockpos, blockstate);
 	}
 
 	@Shadow
@@ -89,8 +63,8 @@ public class WorkAtComposterMixin {
 	}
 
 
-    @Unique
-	private void wealthyAndGrowth$makeFood(ServerLevel p_24790_, Villager p_24803_) {
+    @Inject(at = @At("HEAD"), method = "makeBread")
+    private void wealthyAndGrowth$makeFood(ServerLevel p_376900_, Villager p_24803_, CallbackInfo ci) {
 		SimpleContainer simplecontainer = p_24803_.getInventory();
 		if (simplecontainer.countItem(Items.PUMPKIN_PIE) <= 36) {
 			int i = simplecontainer.countItem(Items.PUMPKIN);
@@ -99,7 +73,7 @@ public class WorkAtComposterMixin {
 				simplecontainer.removeItemType(Items.PUMPKIN, i);
 				ItemStack itemstack = simplecontainer.addItem(new ItemStack(Items.PUMPKIN_PIE, i1));
 				if (!itemstack.isEmpty()) {
-					p_24803_.spawnAtLocation(p_24790_, itemstack, 0.5F);
+                    p_24803_.spawnAtLocation(p_376900_, itemstack, 0.5F);
 				}
 
 			}
