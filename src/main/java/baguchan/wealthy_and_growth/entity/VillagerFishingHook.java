@@ -23,7 +23,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
@@ -52,8 +51,8 @@ public class VillagerFishingHook extends Projectile {
     private boolean biting;
     private int outOfWaterTime;
     private static final int MAX_OUT_OF_WATER_TIME = 10;
-    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(FishingHook.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_BITING = SynchedEntityData.defineId(FishingHook.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(VillagerFishingHook.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_BITING = SynchedEntityData.defineId(VillagerFishingHook.class, EntityDataSerializers.BOOLEAN);
     private int life;
     public int nibble;
     private int timeUntilLured;
