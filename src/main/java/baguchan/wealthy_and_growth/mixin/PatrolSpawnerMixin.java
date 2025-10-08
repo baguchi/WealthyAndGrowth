@@ -24,7 +24,7 @@ public class PatrolSpawnerMixin {
 	private int nextTick;
 
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
-	public void tick(ServerLevel level, boolean p_64571_, boolean p_64572_, CallbackInfo ci) {
+    public void tick(ServerLevel level, boolean p_64571_, CallbackInfo ci) {
 		if (WAGConfig.COMMON.revampedPatrol.get()) {
 			if (!p_64571_) {
 			} else if (!level.getGameRules().getBoolean(GameRules.RULE_DO_PATROL_SPAWNING)) {

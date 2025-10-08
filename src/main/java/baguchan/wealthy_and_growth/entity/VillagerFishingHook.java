@@ -16,7 +16,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
@@ -49,8 +48,8 @@ public class VillagerFishingHook extends Projectile {
     private boolean biting;
     private int outOfWaterTime;
     private static final int MAX_OUT_OF_WATER_TIME = 10;
-    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(FishingHook.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_BITING = SynchedEntityData.defineId(FishingHook.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(VillagerFishingHook.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_BITING = SynchedEntityData.defineId(VillagerFishingHook.class, EntityDataSerializers.BOOLEAN);
     private int life;
     public int nibble;
     private int timeUntilLured;
@@ -141,7 +140,7 @@ public class VillagerFishingHook extends Projectile {
         Entity player = this.getOwner();
         if (player == null && !(player instanceof LivingEntity)) {
             this.discard();
-        } else if (this.level().isClientSide || !this.shouldStopFishing(player)) {
+        } else if (this.level().isClientSide() || !this.shouldStopFishing(player)) {
             if (this.onGround()) {
                 ++this.life;
                 if (this.life >= 200) {
@@ -208,7 +207,7 @@ public class VillagerFishingHook extends Projectile {
                             this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.1D * (double) this.syncronizedRandom.nextFloat() * (double) this.syncronizedRandom.nextFloat(), 0.0D));
                         }
 
-                        if (!this.level().isClientSide) {
+                        if (!this.level().isClientSide()) {
                             this.catchingFish(blockpos);
                         }
                     } else {
@@ -256,7 +255,7 @@ public class VillagerFishingHook extends Projectile {
     @Override
     protected void onHitEntity(EntityHitResult p_37144_) {
         super.onHitEntity(p_37144_);
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.setHookedEntity(p_37144_.getEntity());
         }
 
@@ -410,7 +409,7 @@ public class VillagerFishingHook extends Projectile {
 
     public int retrieve(ItemStack p_37157_) {
         Entity player = this.getOwner();
-        if (!this.level().isClientSide && player != null && !this.shouldStopFishing((LivingEntity) player)) {
+        if (!this.level().isClientSide() && player != null && !this.shouldStopFishing((LivingEntity) player)) {
             int i = 0;
             if (this.hookedIn != null) {
                 this.pullEntity(this.hookedIn);
@@ -447,7 +446,7 @@ public class VillagerFishingHook extends Projectile {
 
     @Override
     public void handleEntityEvent(byte p_37123_) {
-        if (p_37123_ == 31 && this.level().isClientSide && this.hookedIn instanceof Player && ((Player) this.hookedIn).isLocalPlayer()) {
+        if (p_37123_ == 31 && this.level().isClientSide() && this.hookedIn instanceof Player && ((Player) this.hookedIn).isLocalPlayer()) {
             this.pullEntity(this.hookedIn);
         }
 

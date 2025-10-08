@@ -1,15 +1,15 @@
 package baguchan.wealthy_and_growth.client;
 
-import baguchan.wealthy_and_growth.WealthyAndGrowth;
 import baguchan.wealthy_and_growth.entity.VillagerFishingHook;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.FishingHookRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingHook, FishingHookRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(WealthyAndGrowth.MODID,"textures/entity/fishing_hook.png");
+    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/fishing_hook.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutout(TEXTURE_LOCATION);
     private static final double VIEW_BOBBING_SCALE = 960.0D;
 
@@ -34,31 +34,33 @@ public class VillagerFishingHookRenderer extends EntityRenderer<VillagerFishingH
     }
 
     @Override
-    public void render(FishingHookRenderState p_362456_, PoseStack p_114699_, MultiBufferSource p_114700_, int p_114701_) {
-        p_114699_.pushPose();
-        p_114699_.pushPose();
-        p_114699_.scale(0.5F, 0.5F, 0.5F);
-        p_114699_.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        PoseStack.Pose posestack$pose = p_114699_.last();
-        VertexConsumer vertexconsumer = p_114700_.getBuffer(RENDER_TYPE);
-        vertex(vertexconsumer, posestack$pose, p_114701_, 0.0F, 0, 0, 1);
-        vertex(vertexconsumer, posestack$pose, p_114701_, 1.0F, 0, 1, 1);
-        vertex(vertexconsumer, posestack$pose, p_114701_, 1.0F, 1, 1, 0);
-        vertex(vertexconsumer, posestack$pose, p_114701_, 0.0F, 1, 0, 0);
-        p_114699_.popPose();
-        float f = (float) p_362456_.lineOriginOffset.x;
-        float f1 = (float) p_362456_.lineOriginOffset.y;
-        float f2 = (float) p_362456_.lineOriginOffset.z;
-        VertexConsumer vertexconsumer1 = p_114700_.getBuffer(RenderType.lineStrip());
-        PoseStack.Pose posestack$pose1 = p_114699_.last();
-        int i = 16;
+    public void submit(FishingHookRenderState p_451173_, PoseStack p_434862_, SubmitNodeCollector p_433298_, CameraRenderState p_451318_) {
+        p_434862_.pushPose();
+        p_434862_.pushPose();
+        p_434862_.scale(0.5F, 0.5F, 0.5F);
+        p_434862_.mulPose(p_451318_.orientation);
+        p_433298_.submitCustomGeometry(p_434862_, RENDER_TYPE, (p_434943_, p_432878_) -> {
+            vertex(p_432878_, p_434943_, p_451173_.lightCoords, 0.0F, 0, 0, 1);
+            vertex(p_432878_, p_434943_, p_451173_.lightCoords, 1.0F, 0, 1, 1);
+            vertex(p_432878_, p_434943_, p_451173_.lightCoords, 1.0F, 1, 1, 0);
+            vertex(p_432878_, p_434943_, p_451173_.lightCoords, 0.0F, 1, 0, 0);
+        });
+        p_434862_.popPose();
+        float f = (float) p_451173_.lineOriginOffset.x;
+        float f1 = (float) p_451173_.lineOriginOffset.y;
+        float f2 = (float) p_451173_.lineOriginOffset.z;
+        p_433298_.submitCustomGeometry(p_434862_, RenderType.lines(), (p_436505_, p_436506_) -> {
+            int i = 16;
 
-        for (int j = 0; j <= 16; j++) {
-            stringVertex(f, f1, f2, vertexconsumer1, posestack$pose1, fraction(j, 16), fraction(j + 1, 16));
-        }
-
-        p_114699_.popPose();
-        super.render(p_362456_, p_114699_, p_114700_, p_114701_);
+            for (int j = 0; j < 16; j++) {
+                float f3 = fraction(j, 16);
+                float f4 = fraction(j + 1, 16);
+                stringVertex(f, f1, f2, p_436506_, p_436505_, f3, f4);
+                stringVertex(f, f1, f2, p_436506_, p_436505_, f4, f3);
+            }
+        });
+        p_434862_.popPose();
+        super.submit(p_451173_, p_434862_, p_433298_, p_451318_);
     }
 
     public static HumanoidArm getHoldingArm(Player p_386900_) {
